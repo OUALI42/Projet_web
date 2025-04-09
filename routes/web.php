@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::get('common-life', [CommonLifeController::class, 'index'])->name('common-life.index');
     });
 
+
 });
 
 require __DIR__.'/auth.php';

@@ -8,31 +8,87 @@
     </x-slot>
 
     <!-- begin: grid -->
-    <div class="grid lg:grid-cols-3 gap-5 lg:gap-7.5 items-stretch">
-        <div class="lg:col-span-2">
-            <div class="grid">
-                <div class="card card-grid h-full min-w-full">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Block 1
-                        </h3>
-                    </div>
-                    <div class="card-body flex flex-col gap-5">
-
-                    </div>
-                </div>
-            </div>
+    <div class="card min-w-full">
+        <div class="card-header">
+            <h3 class="card-title">
+                ORGANISATION
+            </h3>
         </div>
-        <div class="lg:col-span-1">
-            <div class="card card-grid h-full min-w-full">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Block 2
-                    </h3>
-                </div>
-                <div class="card-body flex flex-col gap-5">
-                </div>
-            </div>
+        <div class="card-table">
+            <table class="table align-middle text-gray-700 font-medium text-sm">
+                <thead>
+                <tr>
+                    <th>
+                        <button class="btn btn-clear btn-primary">
+                            Promotions
+                        </button>
+                    </th>
+                    <th>
+                        <button class="btn btn-clear btn-success">
+                            Groupes
+                        </button>
+                    </th>
+                    <th>
+                        <button class="btn btn-clear btn-light">
+                            Enseignants
+                        </button>
+                    </th>
+                    <th>
+                        Etudiants
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {{ $promotionsCount }}
+                    </td>
+                    <td>
+                        {{ $groupsCount }}
+                    </td>
+                    <td>
+                        {{ $teachersCount }}
+                    </td>
+                    <td>
+                        {{ $studentsCount }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{url('/cohorts')}}">
+                            <button class="btn btn-primary">
+                                <i class="ki-outline ki-plus-squared"></i>
+                                Promotions
+                            </button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{url('/groups')}}">
+                            <button class="btn btn-success">
+                                <i class="ki-outline ki-plus-squared"></i>
+                                Groupes
+                            </button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{url('/teachers')}}">
+                            <button class="btn btn-dark">
+                                <i class="ki-outline ki-plus-squared"></i>
+                                Enseignants
+                            </button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{url('/students')}}">
+                            <button class="btn btn-light">
+                                <i class="ki-outline ki-plus-squared"></i>
+                                Etudiants
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <!-- end: grid -->
