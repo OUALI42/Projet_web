@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function () {
 
         // Common life
         Route::get('common-life', [CommonLifeController::class, 'index'])->name('common-life.index');
+        Route::post('/common-life/save', [\App\Http\Controllers\CommonLifeController::class, 'saveTask'])->name('commonlife.save');
+
+
+
     });
 
 

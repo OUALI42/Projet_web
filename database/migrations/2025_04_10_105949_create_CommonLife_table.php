@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('CommonLife_Table', function (Blueprint $table) {
             $table->id();
-            $table->id('StudentID');
-            $table->string('Task');
+            $table->bigInteger('StudentID')->unsigned();
+            $table->String('Task');
             $table->Boolean('Status');
             $table->Text('Commentary');
             $table->timestamps();
