@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h1 class="flex items-center gap-1 text-sm font-normal">
             <span class="text-gray-700">
-                {{ __('Dashboard') }}
+                {{ __('Promotions') }}
             </span>
         </h1>
     </x-slot>
@@ -13,24 +13,100 @@
             <div class="grid">
                 <div class="card card-grid h-full min-w-full">
                     <div class="card-header">
-                        <h3 class="card-title">
-                            Block 1
-                        </h3>
+                        <h3 class="card-title">Mes promotions</h3>
                     </div>
-                    <div class="card-body flex flex-col gap-5">
-
+                    <div class="card-body">
+                        <div data-datatable="true" data-datatable-page-size="5">
+                            <div class="scrollable-x-auto">
+                                <table class="table table-border" data-datatable-table="true">
+                                    <thead>
+                                    <tr>
+                                        <th class="min-w-[280px]">
+                                            <span class="sort asc">
+                                                 <span class="sort-label">Promotion</span>
+                                                 <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
+                                        <th class="min-w-[135px]">
+                                            <span class="sort">
+                                                <span class="sort-label">Année</span>
+                                                <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
+                                        <th class="min-w-[135px]">
+                                            <span class="sort">
+                                                <span class="sort-label">Etudiants</span>
+                                                <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="flex flex-col gap-2">
+                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                   href="{{ route('cohort.show', 1) }}">
+                                                    Promotion B1
+                                                </a>
+                                                <span class="text-2sm text-gray-700 font-normal leading-3">
+                                                    Cergy
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>2024-2025</td>
+                                        <td>34</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex flex-col gap-2">
+                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                   href="{{ route('cohort.show', 1) }}">
+                                                    Promotion B2
+                                                </a>
+                                                <span class="text-2sm text-gray-700 font-normal leading-3">
+                                                    Cergy
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>2024-2025</td>
+                                        <td>31</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex flex-col gap-2">
+                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                   href="{{ route('cohort.show', 1) }}">
+                                                    Promotion B3
+                                                </a>
+                                                <span class="text-2sm text-gray-700 font-normal leading-3">
+                                                    Cergy
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>2024-2025</td>
+                                        <td>30</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex flex-col gap-2">
+                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                   href="{{ route('cohort.show', 1) }}">
+                                                    Promotion B4
+                                                </a>
+                                                <span class="text-2sm text-gray-700 font-normal leading-3">
+                                                    Cergy
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>2024-2025</td>
+                                        <td>28</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="lg:col-span-1">
-            <div class="card card-grid h-full min-w-full">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Block 2
-                    </h3>
-                </div>
-                <div class="card-body flex flex-col gap-5">
                 </div>
             </div>
         </div>
