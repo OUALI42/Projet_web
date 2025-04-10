@@ -81,10 +81,10 @@
                         <td class="py-2 px-4">Compétence en gestion du temps</td>
                         <td class="py-2 px-4">- Organiser et planifier efficacement son emploi du temps.</td>
                         <td class="text-center">
-                            <select class="select select-sm">
+                            <select class="select select-sm" id="status-1">
                                 <option value="a_faire">À faire</option>
                                 <option value="en_cours">En cours</option>
-                                <option value="termine" selected>Terminé</option>
+                                <option value="termine">Terminé</option>
                             </select>
                         </td>
                     </tr>
@@ -92,7 +92,7 @@
                         <td class="py-2 px-4">Compétence en travail d’équipe</td>
                         <td class="py-2 px-4">- Collaborer harmonieusement avec d’autres membres d’un groupe, partager des idées.</td>
                         <td class="text-center">
-                            <select class="select select-sm">
+                            <select class="select select-sm" id="status-2">
                                 <option value="a_faire">À faire</option>
                                 <option value="en_cours">En cours</option>
                                 <option value="termine" selected>Terminé</option>
@@ -103,7 +103,7 @@
                         <td class="py-2 px-4">Compétence en résolution de problèmes</td>
                         <td class="py-2 px-4">- Identifier et analyser un problème de manière structurée, proposer des solutions.</td>
                         <td class="text-center">
-                            <select class="select select-sm">
+                            <select class="select select-sm" id="status-3">
                                 <option value="a_faire">À faire</option>
                                 <option value="en_cours">En cours</option>
                                 <option value="termine" selected>Terminé</option>
@@ -114,7 +114,7 @@
                         <td class="py-2 px-4">Compétence en leadership</td>
                         <td class="py-2 px-4">- Diriger une équipe en inspirant confiance, en motivant les membres.</td>
                         <td class="text-center">
-                            <select class="select select-sm">
+                            <select class="select select-sm" id="status-4">
                                 <option value="a_faire">À faire</option>
                                 <option value="en_cours">En cours</option>
                                 <option value="termine" selected>Terminé</option>
@@ -126,4 +126,28 @@
             </div>
         </div>
     </div>
+    <script>
+        // Fonction pour sauvegarder l'état de la sélection
+        function saveStatus(bilanId, status) {
+            localStorage.setItem(bilanId, status);
+        }
+
+        // Fonction pour charger l'état sauvegardé
+        function loadStatus() {
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                const bilanId = select.id;
+                const savedStatus = localStorage.getItem(bilanId);
+                if (savedStatus) {
+                    select.value = savedStatus;
+                }
+                select.addEventListener('change', function() {
+                    saveStatus(bilanId, this.value);
+                });
+            });
+        }
+
+        // Charger les statuts enregistrés lors du chargement de la page
+        window.onload = loadStatus;
+    </script>
 </x-app-layout>

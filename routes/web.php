@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
         // Knowledge
         Route::get('knowledge', [KnowledgeController::class, 'index'])->name('knowledge.index');
 
+
         // Groups
         Route::get('groups', [GroupController::class, 'index'])->name('group.index');
 

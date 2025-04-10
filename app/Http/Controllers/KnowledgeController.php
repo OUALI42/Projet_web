@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Knowledge;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
