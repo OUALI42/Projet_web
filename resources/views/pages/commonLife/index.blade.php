@@ -78,6 +78,9 @@
                         <th class="text-center py-3 px-4">
                             <span class="badge badge-danger">Commentaire</span>
                         </th>
+                        <th class="text-center py-3 px-4">
+                            <span class="badge badge-dark" style="font-size: 1.2rem;">Action</span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>

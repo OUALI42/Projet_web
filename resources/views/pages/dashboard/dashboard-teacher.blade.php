@@ -39,6 +39,12 @@
                                                 <span class="sort-icon"></span>
                                             </span>
                                         </th>
+                                        <th class="min-w-[135px]">
+                                            <span class="sort">
+                                                <span class="sort-label">Retrospective</span>
+                                                <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>

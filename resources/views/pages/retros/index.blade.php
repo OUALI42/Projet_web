@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <h1 class="flex items-center gap-1 text-sm font-normal">
             <span class="text-gray-700">
                 {{ __('Retrospectives') }}
@@ -68,32 +69,72 @@
                         <th class="text-left py-3 px-4">
                             <span class="badge badge-primary" style="font-size: 1.2rem;">Promo</span>
                         </th>
-
                         <th class="text-center py-3 px-4">
                             <span class="badge badge-success" style="font-size: 1.2rem;">Retro</span>
+                        </th>
+                        <th class="text-center py-3 px-4">
+                            <span class="badge badge-dark" style="font-size: 1.2rem;">Action</span>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="py-2 px-4">Promotion B1</td>
-                        <td class="py-2 px-4"><textarea class="textarea" placeholder="Default" rows="4" value=""></textarea></td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4">Promotion B2</td>
-                        <td class="py-2 px-4"><textarea class="textarea" placeholder="Default" rows="4" value=""></textarea></td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4">Promotion B3</td>
-                        <td class="py-2 px-4"><textarea class="textarea" placeholder="Default" rows="4" value=""></textarea></td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4">Promotion B4</td>
-                        <td class="py-2 px-4"><textarea class="textarea" placeholder="Default" rows="4" value=""></textarea></td>
-                    </tr>
+                    @php
+                        $promotions = ['Promotion B1', 'Promotion B2', 'Promotion B3', 'Promotion B4'];
+                    @endphp
+
+                    @foreach($promotions as $promo)
+                        <tr>
+                            <td class="py-2 px-4">{{ $promo }}</td>
+                            <td class="py-2 px-4">
+                                <textarea class="textarea" rows="4" placeholder="Écrire une rétro...">
+                                    {{ $retros[$promo]->Retro ?? '' }}
+                                </textarea>
+                            </td>
+                            <td class="text-center py-2 px-4">
+                                <button class="btn btn-dark">Enregistrer</button>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    document.querySelectorAll('.btn.btn-dark').forEach(button => {
+        button.addEventListener('click', function (event) {
+            let row = event.target.closest('tr');
+            let promoName = row.querySelector('td:first-child').innerText.trim();
+            let retroText = row.querySelector('textarea').value.trim();
+            let teacherID = {{ auth()->id() }};
+
+            let data = {
+                Teacher_id: teacherID,
+                Name_of_Promotion: promoName,
+                Retro: retroText
+            };
+
+            fetch('{{ route('retro.save') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert("Rétro enregistrée !");
+                })
+                .catch(error => {
+                    alert("Erreur lors de l'enregistrement.");
+                    console.error(error);
+                });
+        });
+    });
+</script>
+
+
+

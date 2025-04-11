@@ -6,14 +6,16 @@ use App\Models\Cohort;
 use App\Models\Group;
 use App\Models\Students;
 use App\Models\Teacher;
+use App\Models\User;
+use App\Models\UserSchool;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index() {
         $promotionsCount = Cohort::count();
-        $studentsCount = Students::count();
-        $teachersCount = Teacher::count();
+        $studentsCount = UserSchool::where('role', 'student')->count();
+        $teachersCount = UserSchool::where('role', 'teacher')->count();
         $groupsCount = Group::count();
         $userRole = auth()->user()->school()->pivot->role;
 
