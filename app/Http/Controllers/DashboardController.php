@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index() {
+//        counting the antitheses of a table
         $promotionsCount = Cohort::count();
         $studentsCount = UserSchool::where('role', 'student')->count();
         $teachersCount = UserSchool::where('role', 'teacher')->count();
-        $groupsCount = Group::count();
         $userRole = auth()->user()->school()->pivot->role;
 
-        return view('pages.dashboard.dashboard-' . $userRole, compact('promotionsCount', 'studentsCount', 'teachersCount', 'groupsCount'));
+        return view('pages.dashboard.dashboard-' . $userRole, compact('promotionsCount', 'studentsCount', 'teachersCount'));
     }
 }

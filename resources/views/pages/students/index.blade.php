@@ -47,16 +47,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($students as $student)
                                         <tr>
-                                            <td>Doe</td>
-                                            <td>John</td>
-                                            <td>12/02/2000</td>
+                                            <td>{{ $student->last_name }}</td>
+                                            <td>{{ $student->first_name }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($student->birth_date)->format('d/m/Y') }}</td>
                                             <td>
                                                 <div class="flex items-center justify-between">
                                                     <a href="#">
                                                         <i class="text-success ki-filled ki-shield-tick"></i>
                                                     </a>
-
                                                     <a class="hover:text-primary cursor-pointer" href="#"
                                                        data-modal-toggle="#student-modal">
                                                         <i class="ki-filled ki-cursor"></i>
@@ -64,22 +64,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Joe</td>
-                                            <td>Dohn</td>
-                                            <td>02/12/2000</td>
-                                            <td>
-                                                <div class="flex items-center justify-between">
-                                                    <a href="#">
-                                                        <i class="text-danger ki-filled ki-shield-cross"></i>
-                                                    </a>
-                                                    <a class="hover:text-primary cursor-pointer" href="#"
-                                                       data-modal-toggle="#student-modal">
-                                                        <i class="ki-filled ki-cursor"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -107,13 +92,69 @@
                     </h3>
                 </div>
                 <div class="card-body flex flex-col gap-5">
-                    Formulaire à créer
-                    <!-- @todo A compléter -->
+                    <form id="student-form">
+                        @csrf
+
+                        <x-forms.input name="last_name" :label="__('Nom')" />
+                        <x-forms.input name="first_name" :label="__('Prénom')" />
+                        <x-forms.input type="email" name="email" :label="__('Email')" />
+                        <x-forms.input type="date" name="birth_date" :label="__('Date de naissance')" />
+
+                        <x-forms.primary-button>
+                            {{ __('Valider') }}
+                        </x-forms.primary-button>
+                    </form>
+                    <div id="form-message" class="text-sm mt-2"></div>
                 </div>
             </div>
         </div>
     </div>
     <!-- end: grid -->
 </x-app-layout>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('student-form');
+        const messageDiv = document.getElementById('form-message');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault(); // Empêche la soumission normale
+
+            // Réinitialise les messages
+            messageDiv.innerHTML = '';
+            messageDiv.className = 'text-sm mt-2';
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch("{{ route('student.save') }}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    let errorHtml = '';
+                    for (let field in errorData.errors) {
+                        errorHtml += `<p class="text-red-500">${errorData.errors[field][0]}</p>`;
+                    }
+                    messageDiv.innerHTML = errorHtml;
+                    return;
+                }
+
+                const result = await response.json();
+                messageDiv.innerHTML = `<p class="text-green-600">${result.message}</p>`;
+                form.reset(); // Optionnel : réinitialise le formulaire
+
+            } catch (error) {
+                messageDiv.innerHTML = `<p class="text-red-500">Erreur inattendue. Veuillez réessayer.</p>`;
+            }
+        });
+    });
+</script>
+
 
 @include('pages.students.student-modal')

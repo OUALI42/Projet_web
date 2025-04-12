@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
         // Students
         Route::get('students', [StudentController::class, 'index'])->name('student.index');
+        Route::post('/student/save', [StudentController::class, 'store'])->name('student.save');
+        Route::post('/students/update', [StudentController::class, 'UpdateUser'])->name('student.update');
 
         // Knowledge
         Route::get('knowledge', [KnowledgeController::class, 'index'])->name('knowledge.index');

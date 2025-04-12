@@ -17,7 +17,7 @@ class CommonLifeController extends Controller
     }
     public function saveTask(Request $request)
     {
-//        Vérification des types
+        //Type Verification
         $validated = $request->validate([
             'StudentID' => 'required|integer',
             'Task' => 'required|string',
@@ -25,7 +25,7 @@ class CommonLifeController extends Controller
             'Commentary' => 'nullable|string',
         ]);
 
-        // Savoir si il faut les mettre a jours ou les crées
+        // Know whether to update or create them
         CommonLife::updateOrCreate(
             [
                 'StudentID' => $validated['StudentID'],

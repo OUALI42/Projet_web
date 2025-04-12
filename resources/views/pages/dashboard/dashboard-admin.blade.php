@@ -44,7 +44,7 @@
                         {{ $promotionsCount }}
                     </td>
                     <td>
-                        {{ $groupsCount }}
+                        5
                     </td>
                     <td>
                         {{ $teachersCount }}
