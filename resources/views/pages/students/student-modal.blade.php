@@ -4,54 +4,48 @@
 
 @section('modal-content')
     <h3 class="card-title">
-        Ajouter un étudiant
+        Modifier un étudiant
     </h3>
-    </div>
     <div class="card-body flex flex-col gap-5">
-        <form id="updateUserForm">
+        <form id="updateUserForm" method="POST">
             @csrf
 
+            <x-forms.input name="current_email" :label="__('Email de l\'utilisateur à modifier')" />
+            <x-forms.input type="email" name="email" :label="__('Nouvel Email')" />
             <x-forms.input name="last_name" :label="__('Nom')" />
             <x-forms.input name="first_name" :label="__('Prénom')" />
-            <x-forms.input type="email" name="email" :label="__('Email')" />
             <x-forms.input type="date" name="birth_date" :label="__('Date de naissance')" />
+
             <x-forms.primary-button>
                 {{ __('Valider') }}
             </x-forms.primary-button>
         </form>
+    </div>
 
-        <div id="responseMessage"></div>  <!-- Zone pour afficher la réponse de l'API -->
-
-    </div>
-    </div>
-    </div>
-    </div>
 
 <script>
-document.getElementById('updateUserForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Empêche l'envoi classique du formulaire
+    document.getElementById('updateUserForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    const formData = new FormData(this);
+        const formData = new FormData(this);
 
-    fetch("{{ route('student.update') }}", {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',  // Indique que c'est une requête AJAX
-            'Accept': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            // Affiche un message de succès
-            document.getElementById('responseMessage').innerHTML = `<p style="color: green;">${data.message}</p>`;
-        }
-    })
-    .catch(error => {
-        // Gère les erreurs
-        document.getElementById('responseMessage').innerHTML = `<p style="color: red;">Une erreur est survenue. Veuillez réessayer.</p>`;
+        fetch("{{ route('student.update') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                document.getElementById('responseMessage').innerHTML = `<p style="color: green;">${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            document.getElementById('responseMessage').innerHTML = `<p style="color: red;">Une erreur est survenue. Veuillez réessayer.</p>`;
+        });
     });
-});
 </script>
 @overwrite

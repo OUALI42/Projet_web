@@ -48,19 +48,30 @@ class StudentController extends Controller
 
     public function UpdateUser(Request $request)
     {
+        //      Type Verification
         $validated = $request->validate([
+            'current_email' => 'required|email|exists:users,email',
             'last_name'     => 'required|string|max:255',
             'first_name'    => 'required|string|max:255',
             'birth_date'    => 'nullable|date',
-            'email'         => 'required|email|max:255|unique:users,email,' . auth()->id(),
+            'email'         => 'required|email|max:255|unique:users,email,' . $request->current_email . ',email',
         ]);
 
-        $user = auth()->user();
+        // We retrieve the user by his current email
+        $user = \App\Models\User::where('email', $validated['current_email'])->first();
 
-        $user->update($validated);
+        if (!$user) {
+            return response()->json(['message' => 'Utilisateur non trouvé.'], 404);
+        }
+
+        // Update of informations
+        $user->update([
+            'first_name' => $validated['first_name'],
+            'last_name'  => $validated['last_name'],
+            'birth_date' => $validated['birth_date'],
+            'email'      => $validated['email'],
+        ]);
 
         return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
     }
-
-
 }
