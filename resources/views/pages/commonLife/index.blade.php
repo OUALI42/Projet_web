@@ -110,17 +110,19 @@
 
 <script>
     document.querySelectorAll('.btn.btn-dark').forEach(button => {
-        // évènement du bouton
+        // button event
         button.addEventListener('click', function (event) {
             let row = event.target.closest('tr');
-            // Récupération des données
+
+            // data recovery
             let checkbox = row.querySelector('input[type="checkbox"]');
             let comment = row.querySelector('input[type="text"]').value;
             let task = row.querySelector('td:first-child').innerText.trim();
-            //l'id de létudiant connecté
+
+            //the student id connected
             let studentID = {{ auth()->id() }};
 
-            // Constructio des données a envoyé
+            // Construction of data sent
             let data = {
                 StudentID: studentID,
                 Task: task,
@@ -128,7 +130,7 @@
                 Commentary: comment
             };
 
-            // Envoye la requete  a la route spécifié
+            // Send the request to the specified route
             fetch('{{ route('commonlife.save') }}', {
                 method: 'POST',
                 headers: {

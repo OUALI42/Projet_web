@@ -22,13 +22,14 @@
         </form>
     </div>
 
-
+    {{-- This scritp get the information for update student in to the list of student --}}
 <script>
     document.getElementById('updateUserForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
         const formData = new FormData(this);
 
+        // Route consultation for the method
         fetch("{{ route('student.update') }}", {
             method: 'POST',
             body: formData,

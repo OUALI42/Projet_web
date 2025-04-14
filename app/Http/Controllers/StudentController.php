@@ -74,4 +74,21 @@ class StudentController extends Controller
 
         return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
     }
+
+//    public function delete(Request $request, $id)
+//    {
+//        try {
+//            // Supprimer les enregistrements de la table users_schools
+//            UserSchool::where('user_id', $id)->delete();
+//
+//            // Supprimer l'utilisateur de la table users
+//            $user = User::findOrFail($id);
+//            $user->delete();
+//
+//            return view('pages.students.index');
+//        } catch (\Exception $e) {
+//            return response()->json(['success' => false, 'message' => 'Erreur lors de la suppression.']);
+//        }
+//    }
+
 }

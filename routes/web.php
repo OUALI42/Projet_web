@@ -9,7 +9,9 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\KnowledgeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TeacherController;
+use  App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Route;
+
 
 // Redirect the root path to /dashboard
 Route::redirect('/', 'dashboard');
@@ -35,6 +37,9 @@ Route::middleware('auth')->group(function () {
         Route::get('students', [StudentController::class, 'index'])->name('student.index');
         Route::post('/student/save', [StudentController::class, 'store'])->name('student.save');
         Route::post('/students/update', [StudentController::class, 'UpdateUser'])->name('student.update');
+//        Route::delete('/student/{id}', [StudentController::class, 'delete'])->name('student.delete');
+
+
 
         // Knowledge
         Route::get('knowledge', [KnowledgeController::class, 'index'])->name('knowledge.index');
@@ -51,6 +56,8 @@ Route::middleware('auth')->group(function () {
         Route::get('common-life', [CommonLifeController::class, 'index'])->name('common-life.index');
         Route::post('/common-life/save', [\App\Http\Controllers\CommonLifeController::class, 'saveTask'])->name('commonlife.save');
 
+        //Email
+        Route::post('/send-mail', [\App\Http\Controllers\EmailController::class, 'sendWelcomeEmail'])->name('sendmail');
 
 
     });

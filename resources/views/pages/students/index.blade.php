@@ -54,12 +54,15 @@
                                             <td>{{ \Carbon\Carbon::parse($student->birth_date)->format('d/m/Y') }}</td>
                                             <td>
                                                 <div class="flex items-center justify-between">
-                                                    <a href="#">
-                                                        <i class="text-success ki-filled ki-shield-tick"></i>
+                                                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#student-modal">
+                                                        <button class="btn btn-xs btn-primary">
+                                                            Modifier
+                                                        </button>
                                                     </a>
-                                                    <a class="hover:text-primary cursor-pointer" href="#"
-                                                       data-modal-toggle="#student-modal">
-                                                        <i class="ki-filled ki-cursor"></i>
+                                                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
+                                                        <button class="btn btn-xs btn-danger">
+                                                            Supprimer
+                                                        </button>
                                                     </a>
                                                 </div>
                                             </td>
@@ -95,9 +98,9 @@
                     <form id="student-form">
                         @csrf
 
-                        <x-forms.input name="last_name" :label="__('Nom')" />
-                        <x-forms.input name="first_name" :label="__('Prénom')" />
-                        <x-forms.input type="email" name="email" :label="__('Email')" />
+                        <x-forms.input name="last_name"  :label="__('Nom')" />
+                        <x-forms.input name="first_name"  id="nom" :label="__('Prénom')" />
+                        <x-forms.input type="email" name="email" id="email" :label="__('Email')" />
                         <x-forms.input type="date" name="birth_date" :label="__('Date de naissance')" />
 
                         <x-forms.primary-button>
@@ -111,22 +114,32 @@
     </div>
     <!-- end: grid -->
 </x-app-layout>
+
+
+
+{{-- This scritp get the information for add student in to the list of student and get email for send email   --}}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('student-form');
         const messageDiv = document.getElementById('form-message');
 
         form.addEventListener('submit', async function (e) {
-            e.preventDefault(); // Empêche la soumission normale
+            e.preventDefault();
 
-            // Réinitialise les messages
             messageDiv.innerHTML = '';
             messageDiv.className = 'text-sm mt-2';
 
+            // information variable
             const formData = new FormData(form);
+            const firstName = formData.get('first_name');
+            const lastName = formData.get('last_name');
+            const name = `${firstName} ${lastName}`;
 
+            const email = formData.get('email');
+
+            // Route consultation for the method
             try {
-                const response = await fetch("{{ route('student.save') }}", {
+                const saveResponse = await fetch("{{ route('student.save') }}", {
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
@@ -135,8 +148,8 @@
                     body: formData
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
+                if (!saveResponse.ok) {
+                    const errorData = await saveResponse.json();
                     let errorHtml = '';
                     for (let field in errorData.errors) {
                         errorHtml += `<p class="text-red-500">${errorData.errors[field][0]}</p>`;
@@ -145,9 +158,29 @@
                     return;
                 }
 
-                const result = await response.json();
-                messageDiv.innerHTML = `<p class="text-green-600">${result.message}</p>`;
-                form.reset(); // Optionnel : réinitialise le formulaire
+                // If the registration is successful, we send the email
+                const mailRoute = "{{ route('sendmail', ['name' => ':name', 'email' => ':email']) }}"
+                    .replace(':name', encodeURIComponent(name))
+                    .replace(':email', encodeURIComponent(email));
+
+                const mailResponse = await fetch("{{ route('sendmail') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email })
+                });
+
+                if (!mailResponse.ok) {
+                    messageDiv.innerHTML = `<p class="text-yellow-500">Étudiant enregistré, mais l'email n'a pas pu être envoyé.</p>`;
+                    return;
+                }
+
+                const result = await saveResponse.json(); // Reutilisation possible
+                messageDiv.innerHTML = `<p class="text-green-600">${result.message} Un email a été envoyé à l'utilisateur.</p>`;
+                form.reset();
 
             } catch (error) {
                 messageDiv.innerHTML = `<p class="text-red-500">Erreur inattendue. Veuillez réessayer.</p>`;
@@ -156,5 +189,6 @@
     });
 </script>
 
-
+@include('pages.students.Alert-modal')
 @include('pages.students.student-modal')
+

@@ -126,13 +126,14 @@
             </div>
         </div>
     </div>
+
     <script>
-        // Fonction pour sauvegarder l'état de la sélection
+        // Function to save the selection status
         function saveStatus(bilanId, status) {
             localStorage.setItem(bilanId, status);
         }
 
-        // Fonction pour charger l'état sauvegardé
+        //  Function to load the saved state
         function loadStatus() {
             const selects = document.querySelectorAll('select');
             selects.forEach(select => {
@@ -147,7 +148,7 @@
             });
         }
 
-        // Charger les statuts enregistrés lors du chargement de la page
+        // Load the saved statuses when loading the page
         window.onload = loadStatus;
     </script>
 </x-app-layout>
