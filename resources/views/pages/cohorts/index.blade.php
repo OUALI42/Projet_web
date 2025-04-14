@@ -42,22 +42,30 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @forelse($cohorts as $cohort)
                                         <tr>
-                                        <td>
-                                            <div class="flex flex-col gap-2">
-                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
-                                                   href="{{ route('cohort.show', 1) }}">
-                                                    Promotion B1
-                                                </a>
-                                                <span class="text-2sm text-gray-700 font-normal leading-3">
-                                                    Cergy
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>2024-2025</td>
-                                        <td>34</td>
-                                    </tr>
+                                            <td>
+                                                <div class="flex flex-col gap-2">
+                                                    <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                       href="{{ route('cohort.show', $cohort->id) }}">
+                                                        {{ $cohort->name }}
+                                                    </a>
+                                                    <span class="text-2sm text-gray-700 font-normal leading-3">Cergy</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($cohort->start_date)->format('Y') }} -
+                                                {{ \Carbon\Carbon::parse($cohort->end_date)->format('Y') }}
+                                            </td>
+                                            <td>{{ $cohort->number_of_students ?? 0 }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-gray-500 py-4">Aucune promotion trouvée.</td>
+                                        </tr>
+                                    @endforelse
                                     </tbody>
+
                                 </table>
                             </div>
                             <div class="card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-gray-600 text-2sm font-medium">
@@ -83,21 +91,93 @@
                         Ajouter une promotion
                     </h3>
                 </div>
-                <div class="card-body flex flex-col gap-5">
-                    <x-forms.input name="name" :label="__('Nom')" />
-
-                    <x-forms.input name="description" :label="__('Description')" />
-
-                    <x-forms.input type="date" name="year" :label="__('Début de l\'année')" placeholder="" />
-
-                    <x-forms.input type="date" name="year" :label="__('Fin de l\'année')" placeholder="" />
-
-                    <x-forms.primary-button>
-                        {{ __('Valider') }}
-                    </x-forms.primary-button>
-                </div>
+                <form id="cohort-form">
+                    @csrf
+                    <div class="card-body flex flex-col gap-5">
+                        <x-forms.input name="name" :label="__('Nom')" />
+                        <x-forms.input name="description" :label="__('Description')" />
+                        <x-forms.input name="number_of_students" :label="__('Nombre d étudiant')" />
+                        <x-forms.input type="date" name="start_date" :label="__('Début de l\'année')" />
+                        <x-forms.input type="date" name="end_date" :label="__('Fin de l\'année')" />
+                        <div id="form-message"></div>
+                        <x-forms.primary-button>
+                            {{ __('Valider') }}
+                        </x-forms.primary-button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <!-- end: grid -->
 </x-app-layout>
+
+<!-- This Script take the information of form for add in to the list of cohort -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('cohort-form');
+        const messageDiv = document.getElementById('form-message');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            messageDiv.innerHTML = '';
+            messageDiv.className = 'text-sm mt-2';
+
+            const formData = new FormData(form);
+
+            try {
+                const saveResponse = await fetch("{{ route('cohort.Add_Cohort') }}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                });
+
+                const result = await saveResponse.json();
+
+                if (!saveResponse.ok) {
+                    let errorHtml = '';
+                    for (let field in result.errors) {
+                        errorHtml += `<p class="text-red-500">${result.errors[field][0]}</p>`;
+                    }
+                    messageDiv.innerHTML = errorHtml;
+                    return;
+                }
+
+                messageDiv.innerHTML = `<p class="text-green-600">${result.message}</p>`;
+                form.reset();
+
+                // Dynamically updates the promotions table
+                const tbody = document.querySelector('table[data-datatable-table="true"] tbody');
+                const newRow = document.createElement('tr');
+
+                const startDate = new Date(formData.get('start_date'));
+                const endDate = new Date(formData.get('end_date'));
+                const yearRange = `${startDate.getFullYear()}-${endDate.getFullYear()}`;
+
+                newRow.innerHTML = `
+                <td>
+                    <div class="flex flex-col gap-2">
+                        <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary" href="#">
+                            ${formData.get('name')}
+                        </a>
+                        <span class="text-2sm text-gray-700 font-normal leading-3">
+                            Cergy
+                        </span>
+                    </div>
+                </td>
+                <td>${yearRange}</td>
+                <td>${formData.get('number_of_students')}</td>
+            `;
+
+                tbody.appendChild(newRow);
+
+            } catch (error) {
+                messageDiv.innerHTML = `<p class="text-red-500">Une erreur est survenue. Veuillez réessayer.</p>`;
+            }
+        });
+    });
+</script>
+

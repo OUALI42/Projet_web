@@ -182,6 +182,26 @@
                 messageDiv.innerHTML = `<p class="text-green-600">${result.message} Un email a été envoyé à l'utilisateur.</p>`;
                 form.reset();
 
+                // Reset the table with new student
+                const tbody = document.querySelector('table[data-datatable-table="true"] tbody');
+                const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                <td>${lastName}</td>
+                <td>${firstName}</td>
+                <td>${new Date(formData.get('birth_date')).toLocaleDateString('fr-FR')}</td>
+                <td>
+                    <div class="flex items-center justify-between">
+                        <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#student-modal">
+                            <button class="btn btn-xs btn-primary">Modifier</button>
+                        </a>
+                        <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
+                            <button class="btn btn-xs btn-danger">Supprimer</button>
+                        </a>
+                    </div>
+                </td>
+            `;
+                tbody.appendChild(newRow);
             } catch (error) {
                 messageDiv.innerHTML = `<p class="text-red-500">Erreur inattendue. Veuillez réessayer.</p>`;
             }
