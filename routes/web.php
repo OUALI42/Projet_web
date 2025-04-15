@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/cohorts', [CohortController::class, 'index'])->name('cohort.index');
         Route::get('/cohort/{cohort}', [CohortController::class, 'show'])->name('cohort.show');
         Route::post('/cohort/Add_Cohort', [CohortController::class, 'Add_Cohort'])->name('cohort.Add_Cohort');
+        Route::post('/cohort/update/{id}', [CohortController::class, 'UpdateCohort'])->name('Cohort.update');
 
 
         // Teachers

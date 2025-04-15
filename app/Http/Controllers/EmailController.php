@@ -19,8 +19,9 @@ class EmailController extends Controller
 
         $message = "**Objet : Vos identifiants de connexion Coding factory**\n\n
                 Bonjour ".$name.",\n\n
-                Voici votre mot de passe pour accéder à votre espace personnel :\n\n
-                🔐 **Mot de passe** : ".'123456'."\n\n
+                Voici vos identifiants pour accéder à votre espace personnel :\n\n
+                 **Email** : ".$email."\n\n
+                 **Mot de passe** : ".'123456'."\n\n
                 Nous vous recommandons de le modifier dès votre première connexion.\n
                 En cas de problème ou si vous n’êtes pas à l’origine de cette demande, merci de nous contacter immédiatement au 06.05.62.88.30 ou par retour de mail.\n\n
                 À bientôt,\n\n

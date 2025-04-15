@@ -15,22 +15,6 @@ class CohortController extends Controller
      * Display all available cohorts
      * @return Factory|View|Application|object
      */
-//    public function index()
-//    {
-////        information for the variable  cohort
-//        $schoolId = auth()->user()->school_id;
-//
-//        $cohorts = Cohort::where('school_id', auth()->user()->school_id)
-//            ->orderBy('start_date', 'desc')
-//            ->get()
-//            ->map(function ($cohort) {
-//                $cohort->students_count = \App\Models\User::where('cohort_id', $cohort->id)->where('role', 'student')->count();
-//                return $cohort;
-//            });
-//
-//        return view('pages.cohorts.index', compact('cohorts'));
-//    }
-
 
     public function index()
     {
@@ -73,30 +57,28 @@ class CohortController extends Controller
         return response()->json(['message' => 'Promotion ajoutée avec succès.']);
     }
 
-    public function UpdateCohort(Request $request)
+    public function UpdateCohort(Request $request, $id)
     {
-        //      Type Verification
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string',
             'description' => 'required|string',
             'number_of_students' => 'required|integer',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        // We retrieve the user by his current email
-        $Cohort = \App\Models\Cohort::where('email', $validated['current_email'])->first();
+        $cohort = \App\Models\Cohort::find($id);
 
-        // Update of informations
-        $Cohort->update([
+        $cohort->update([
             'name' => $validated['name'],
-            'description'  => $validated['description'],
+            'description' => $validated['description'],
             'number_of_students' => $validated['number_of_students'],
-            'start_date'      => $validated['start_date'],
-            'end_date'      => $validated['end_date'],
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
         ]);
 
-        return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
+        return response()->json(['message' => 'Promotion mise à jour avec succès.', 'cohort' => $cohort]);
     }
+
 
 }

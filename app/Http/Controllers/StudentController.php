@@ -74,17 +74,15 @@ class StudentController extends Controller
 
     public function delete($id)
     {
-//        Get id of user student
+        //Get id of user student
         $user_student = User::find($id);
-//        Delete this student of table
+        //Delete this student of table
         $user_student->delete();
 
         $student_school = UserSchool::find($id);
         $student_school->delete();
 
         return redirect()->back();
-
-
     }
 
 }
