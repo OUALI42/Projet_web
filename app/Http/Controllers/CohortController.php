@@ -73,4 +73,30 @@ class CohortController extends Controller
         return response()->json(['message' => 'Promotion ajoutée avec succès.']);
     }
 
+    public function UpdateCohort(Request $request)
+    {
+        //      Type Verification
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'number_of_students' => 'required|integer',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        // We retrieve the user by his current email
+        $Cohort = \App\Models\Cohort::where('email', $validated['current_email'])->first();
+
+        // Update of informations
+        $Cohort->update([
+            'name' => $validated['name'],
+            'description'  => $validated['description'],
+            'number_of_students' => $validated['number_of_students'],
+            'start_date'      => $validated['start_date'],
+            'end_date'      => $validated['end_date'],
+        ]);
+
+        return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
+    }
+
 }

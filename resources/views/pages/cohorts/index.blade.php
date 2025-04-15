@@ -39,6 +39,12 @@
                                                 <span class="sort-icon"></span>
                                             </span>
                                         </th>
+                                        <th class="min-w-[135px]">
+                                            <span class="sort">
+                                                <span class="sort-label">Action</span>
+                                                <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -50,7 +56,7 @@
                                                        href="{{ route('cohort.show', $cohort->id) }}">
                                                         {{ $cohort->name }}
                                                     </a>
-                                                    <span class="text-2sm text-gray-700 font-normal leading-3">Cergy</span>
+                                                    <span class="text-2sm text-gray-700 font-normal leading-3">{{ $cohort->description }}</span>
                                                 </div>
                                             </td>
                                             <td>
@@ -58,6 +64,20 @@
                                                 {{ \Carbon\Carbon::parse($cohort->end_date)->format('Y') }}
                                             </td>
                                             <td>{{ $cohort->number_of_students ?? 0 }}</td>
+                                            <td>
+                                                <div class="flex items-center justify-between">
+                                                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#editCohorts-modal">
+                                                        <button class="btn btn-xs btn-primary">
+                                                            Modifier
+                                                        </button>
+                                                    </a>
+                                                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
+                                                        <button class="btn btn-xs btn-danger">
+                                                            Supprimer
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -95,7 +115,7 @@
                     @csrf
                     <div class="card-body flex flex-col gap-5">
                         <x-forms.input name="name" :label="__('Nom')" />
-                        <x-forms.input name="description" :label="__('Description')" />
+                        <x-forms.input name="description" :label="__('Localisation')" />
                         <x-forms.input name="number_of_students" :label="__('Nombre d étudiant')" />
                         <x-forms.input type="date" name="start_date" :label="__('Début de l\'année')" />
                         <x-forms.input type="date" name="end_date" :label="__('Fin de l\'année')" />
@@ -170,6 +190,20 @@
                 </td>
                 <td>${yearRange}</td>
                 <td>${formData.get('number_of_students')}</td>
+                <td>
+                <div class="flex items-center justify-between">
+                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#editCohorts-modal">
+                        <button class="btn btn-xs btn-primary">
+                            Modifier
+                        </button>
+                    </a>
+                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
+                        <button class="btn btn-xs btn-danger">
+                            Supprimer
+                        </button>
+                    </a>
+                </div>
+            </td>
             `;
 
                 tbody.appendChild(newRow);
@@ -180,4 +214,4 @@
         });
     });
 </script>
-
+@include('pages.cohorts.editCohorts-modal')

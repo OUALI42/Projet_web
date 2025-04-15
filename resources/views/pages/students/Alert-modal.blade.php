@@ -8,11 +8,11 @@
         Supprimer cet étudiant ?
     </h3>
     <div class="card-body flex flex-col gap-5">
-{{--        <form id="deleteUserForm" method="POST" action="{{ route('student.delete', $student->id) }}">--}}
+        <form id="deleteUserForm" method="POST" action="{{ route('student.delete', $student) }}">
             @csrf
             @method('DELETE')
 
-            <input type="hidden" id="studentId" name="studentId" value="{{ $student->id }}">
+            <input type="hidden" id="studentId" name="studentId" value="{{ $student}}">
 
             <p style="color: red;">Êtes-vous sûr de vouloir supprimer cet étudiant ? <br>
                 (Cette action est irréversible)</p>

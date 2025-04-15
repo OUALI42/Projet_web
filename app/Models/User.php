@@ -82,12 +82,4 @@ class User extends Authenticatable
             ->first();
     }
 
-    /**
-     * this function allows the link between User table and User_School
-     */
-    public function schools()
-    {
-        return $this->belongsToMany(School::class, 'users_schools')->withPivot('role');
-    }
-
 }

@@ -48,6 +48,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($students as $student)
+                                        @if ($User_schools && $User_schools->contains ('user_id',$student->id))
                                         <tr>
                                             <td>{{ $student->last_name }}</td>
                                             <td>{{ $student->first_name }}</td>
@@ -67,6 +68,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -209,6 +211,6 @@
     });
 </script>
 
-@include('pages.students.Alert-modal')
+@include('pages.students.Alert-modal', ['student' => $student])
 @include('pages.students.student-modal')
 

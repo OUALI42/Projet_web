@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\School;
 use App\Models\Students;
 use App\Models\User;
 use App\Models\UserSchool;
@@ -12,17 +13,16 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = \App\Models\User::whereHas('schools', function ($query) {
-            $query->where('role', 'student');
-        })->latest()->get();
+        $students = User::all();
+        $User_schools = UserSchool::where('role', 'student')->get();
 
-        return view('pages.students.index', compact('students'));
+        return view('pages.students.index', compact('students', 'User_schools'));
     }
 
     /**
      * this function saves the information on the Student and add this in to the table
      */
-    public function store(Request $request)
+    public function Save_students(Request $request)
     {
         //      Type Verification
         $validated = $request->validate([
@@ -75,20 +75,17 @@ class StudentController extends Controller
         return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
     }
 
-//    public function delete(Request $request, $id)
-//    {
-//        try {
-//            // Supprimer les enregistrements de la table users_schools
-//            UserSchool::where('user_id', $id)->delete();
-//
-//            // Supprimer l'utilisateur de la table users
-//            $user = User::findOrFail($id);
-//            $user->delete();
-//
-//            return view('pages.students.index');
-//        } catch (\Exception $e) {
-//            return response()->json(['success' => false, 'message' => 'Erreur lors de la suppression.']);
-//        }
-//    }
+    public function delete($id)
+    {
+        $user_student = User::find($id);
+        $user_student->delete();
+
+        $student_school = UserSchool::find($id);
+        $student_school->delete();
+
+        return redirect()->back();
+
+
+    }
 
 }
