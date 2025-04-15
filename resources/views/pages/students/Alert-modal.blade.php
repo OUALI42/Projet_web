@@ -24,42 +24,4 @@
     </div>
 @endsection
 
-@section('scripts')
-{{--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--}}
 
-{{--    <script>--}}
-{{--        $(document).ready(function() {--}}
-{{--            // Quand le formulaire est soumis--}}
-{{--            $('#deleteUserForm').submit(function(e) {--}}
-{{--                e.preventDefault();  // Empêche la soumission classique du formulaire--}}
-
-{{--                // Récupère l'ID de l'étudiant--}}
-{{--                var studentId = $('#studentId').val();--}}
-
-{{--                // Envoi de la requête AJAX pour supprimer l'étudiant--}}
-{{--                $.ajax({--}}
-{{--                    url: '/student/' + studentId,  // L'URL de la route--}}
-{{--                    type: 'DELETE',--}}
-{{--                    data: {--}}
-{{--                        _token: '{{ csrf_token() }}',  // Le token CSRF pour la sécurité--}}
-{{--                        studentId: studentId--}}
-{{--                    },--}}
-{{--                    success: function(response) {--}}
-{{--                        if (response.success) {--}}
-{{--                            // Affiche un message de succès et ferme le modal--}}
-{{--                            alert(response.message);--}}
-{{--                            $('#Alert-modal').modal('hide');  // Si tu utilises Bootstrap Modal--}}
-{{--                            location.reload();  // Recharger la page pour mettre à jour la liste des étudiants--}}
-{{--                        } else {--}}
-{{--                            // Affiche un message d'erreur--}}
-{{--                            alert(response.message);--}}
-{{--                        }--}}
-{{--                    },--}}
-{{--                    error: function(xhr, status, error) {--}}
-{{--                        alert('Une erreur est survenue lors de la suppression.');--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-@endsection

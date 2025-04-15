@@ -1,11 +1,11 @@
 @extends('layouts.modal', [
     'id'    => 'student-modal',
     'title'  => 'Informations étudiant',] )
-
 @section('modal-content')
     <h3 class="card-title">
         Modifier un étudiant
     </h3>
+    <div id="responseMessage" class="mt-4 hidden"> Etudiant modifié avec succès</div>
     <div class="card-body flex flex-col gap-5">
         <form id="updateUserForm" method="POST">
             @csrf
@@ -22,31 +22,53 @@
         </form>
     </div>
 
+
     {{-- This scritp get the information for update student in to the list of student --}}
-<script>
-    document.getElementById('updateUserForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+    <script>
+        document.getElementById('updateUserForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        const formData = new FormData(this);
+            const form = this;
+            const formData = new FormData(form);
+            const responseMessage = document.getElementById('responseMessage');
 
-        // Route consultation for the method
-        fetch("{{ route('student.update') }}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                document.getElementById('responseMessage').innerHTML = `<p style="color: green;">${data.message}</p>`;
-            }
-        })
-        .catch(error => {
-            document.getElementById('responseMessage').innerHTML = `<p style="color: red;">Une erreur est survenue. Veuillez réessayer.</p>`;
+            responseMessage.classList.add('hidden');
+            responseMessage.innerHTML = '';
+
+            fetch("{{ route('student.update') }}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+                .then(async response => {
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        if (data.errors) {
+                            const errorMessages = Object.values(data.errors).flat().join('<br>');
+                            throw new Error(errorMessages);
+                        } else {
+                            throw new Error(data.message || 'Erreur inconnue');
+                        }
+                    }
+
+                    responseMessage.classList.remove('hidden');
+                    responseMessage.innerHTML = `<p class="text-green-600">${data.message}</p>`;
+
+                    // Reload the page after 2 sec
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                })
+                .catch(error => {
+                    responseMessage.classList.remove('hidden');
+                    responseMessage.innerHTML = `<p class="text-red-600">${error.message}</p>`;
+                    console.error('Erreur AJAX :', error);
+                });
         });
-    });
-</script>
+    </script>
+
 @overwrite

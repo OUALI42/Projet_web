@@ -60,9 +60,6 @@ class StudentController extends Controller
         // We retrieve the user by his current email
         $user = \App\Models\User::where('email', $validated['current_email'])->first();
 
-        if (!$user) {
-            return response()->json(['message' => 'Utilisateur non trouvé.'], 404);
-        }
 
         // Update of informations
         $user->update([
@@ -77,7 +74,9 @@ class StudentController extends Controller
 
     public function delete($id)
     {
+//        Get id of user student
         $user_student = User::find($id);
+//        Delete this student of table
         $user_student->delete();
 
         $student_school = UserSchool::find($id);

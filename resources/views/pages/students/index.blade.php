@@ -39,6 +39,12 @@
                                         </th>
                                         <th class="min-w-[135px]">
                                             <span class="sort">
+                                                <span class="sort-label">Email</span>
+                                                <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
+                                        <th class="min-w-[135px]">
+                                            <span class="sort">
                                                 <span class="sort-label">Date de naissance</span>
                                                 <span class="sort-icon"></span>
                                             </span>
@@ -52,22 +58,22 @@
                                         <tr>
                                             <td>{{ $student->last_name }}</td>
                                             <td>{{ $student->first_name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($student->birth_date)->format('d/m/Y') }}</td>
+                                            <td>"{{ $student->email }}"</td>
+                                        <td>{{ \Carbon\Carbon::parse($student->birth_date)->format('d/m/Y') }}</td>
                                             <td>
-                                                <div class="flex items-center justify-between">
+                                                <div class="flex flex-col items-start space-y-2">
                                                     <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#student-modal">
-                                                        <button class="btn btn-xs btn-primary">
+                                                        <button class="btn btn-xs btn-primary w-20">
                                                             Modifier
                                                         </button>
                                                     </a>
                                                     <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
-                                                        <button class="btn btn-xs btn-danger">
+                                                        <button class="btn btn-xs btn-danger w-20">
                                                             Supprimer
                                                         </button>
                                                     </a>
                                                 </div>
                                             </td>
-                                        </tr>
                                         @endif
                                     @endforeach
                                     </tbody>
