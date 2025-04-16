@@ -67,7 +67,15 @@
                                             <td>
                                                 <div class="flex items-center justify-between">
                                                     <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#editCohorts-modal">
-                                                        <button class="btn btn-xs btn-primary" >
+                                                        <button   class="btn btn-xs btn-primary open-edit-modal"
+                                                                  data-id="{{ $cohort->id }}"
+                                                                  data-name="{{ $cohort->name }}"
+                                                                  data-description="{{ $cohort->description }}"
+                                                                  data-number="{{ $cohort->number_of_students }}"
+                                                                  data-start="{{ $cohort->start_date }}"
+                                                                  data-end="{{ $cohort->end_date }}"
+                                                                  data-edit-route="{{ route('Cohort.update', ['id' => $cohort->id]) }}"
+                                                                  data-modal-toggle="#editCohorts-modal" >
                                                             Modifier
                                                         </button>
                                                     </a>
@@ -130,4 +138,4 @@
     </div>
     <!-- end: grid -->
 </x-app-layout>
-@include('pages.cohorts.editCohorts-modal',['cohort' => $cohort])
+@include('pages.cohorts.editCohorts-modal')

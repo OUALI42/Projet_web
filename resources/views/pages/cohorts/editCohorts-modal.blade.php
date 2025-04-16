@@ -12,7 +12,7 @@
             @csrf
             <input type="hidden" name="id" value="{{ $cohort->id }}">
 
-            <x-forms.input name="name" :label="__('Nom')" :value="$cohort->name" />
+            <x-forms.input name="name" :label="__('Nom')" />
             <x-forms.input name="description" :label="__('Localisation')" />
             <x-forms.input name="number_of_students" :label="__('Nombre d étudiant')" />
             <x-forms.input type="date" name="start_date" :label="__('Début de l\'année')" />

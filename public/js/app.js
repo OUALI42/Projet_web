@@ -3545,21 +3545,21 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // This scritp get the information for update Cohorts in to the list of Cohorts
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('updateCohortsForm');
-  var editRoute = form.dataset.editRoute;
   var responseMessage = document.getElementById('responseMessage');
   form.addEventListener('submit', /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(event) {
-      var formData, cohortId, response, data, errorMessages;
+      var editRoute, formData, cohortId, response, data, errorMessages;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             event.preventDefault();
+            editRoute = form.dataset.editRoute;
             responseMessage.classList.add('hidden');
             responseMessage.innerHTML = '';
             formData = new FormData(form);
             cohortId = form.querySelector('input[name="id"]').value;
-            _context.prev = 5;
-            _context.next = 8;
+            _context.prev = 6;
+            _context.next = 9;
             return fetch(editRoute, {
               method: 'POST',
               body: formData,
@@ -3569,49 +3569,66 @@ document.addEventListener('DOMContentLoaded', function () {
                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
               }
             });
-          case 8:
+          case 9:
             response = _context.sent;
-            _context.next = 11;
+            _context.next = 12;
             return response.json();
-          case 11:
+          case 12:
             data = _context.sent;
             if (response.ok) {
-              _context.next = 19;
+              _context.next = 20;
               break;
             }
             if (!data.errors) {
-              _context.next = 18;
+              _context.next = 19;
               break;
             }
             errorMessages = Object.values(data.errors).flat().join('<br>');
             throw new Error(errorMessages);
-          case 18:
-            throw new Error(data.message || 'Erreur inconnue');
           case 19:
-            // Afficher un message de succès
+            throw new Error(data.message || 'Erreur inconnue');
+          case 20:
             responseMessage.classList.remove('hidden');
             responseMessage.innerHTML = "<p class=\"text-green-600\">".concat(data.message, "</p>");
             setTimeout(function () {
               location.reload();
             }, 2000);
-            _context.next = 29;
+            _context.next = 30;
             break;
-          case 24:
-            _context.prev = 24;
-            _context.t0 = _context["catch"](5);
+          case 25:
+            _context.prev = 25;
+            _context.t0 = _context["catch"](6);
             responseMessage.classList.remove('hidden');
             responseMessage.innerHTML = "<p class=\"text-red-600\">".concat(_context.t0.message, "</p>");
             console.error('Erreur AJAX :', _context.t0);
-          case 29:
+          case 30:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[5, 24]]);
+      }, _callee, null, [[6, 25]]);
     }));
     return function (_x) {
       return _ref.apply(this, arguments);
     };
   }());
+});
+document.addEventListener('DOMContentLoaded', function () {
+  var buttons = document.querySelectorAll('.open-edit-modal');
+  var form = document.getElementById('updateCohortsForm');
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      // Fill in the form with button data
+      form.querySelector('input[name="id"]').value = button.dataset.id;
+      form.querySelector('input[name="name"]').value = button.dataset.name;
+      form.querySelector('input[name="description"]').value = button.dataset.description;
+      form.querySelector('input[name="number_of_students"]').value = button.dataset.number;
+      form.querySelector('input[name="start_date"]').value = button.dataset.start;
+      form.querySelector('input[name="end_date"]').value = button.dataset.end;
+
+      // Dynamically update the editRoute attribute of the form
+      form.dataset.editRoute = button.dataset.editRoute;
+    });
+  });
 });
 
 /***/ }),
