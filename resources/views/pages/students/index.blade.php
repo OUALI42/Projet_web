@@ -67,11 +67,15 @@
                                                             Modifier
                                                         </button>
                                                     </a>
-                                                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
+                                                    <a href="#" class="open-delete-modal hover:text-primary cursor-pointer"
+                                                       data-id="{{ $student->id }}"
+                                                       data-action="{{ route('student.delete', $student->id) }}"
+                                                       data-modal-toggle="#Alert-modal">
                                                         <button class="btn btn-xs btn-danger w-20">
                                                             Supprimer
                                                         </button>
                                                     </a>
+
                                                 </div>
                                             </td>
                                         @endif
