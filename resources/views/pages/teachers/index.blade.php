@@ -55,7 +55,7 @@
                                                 <td>{{ $teacher->email }}</td>
                                                 <td>
                                                     <div class="flex flex-col items-start space-y-2">
-                                                        <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#student-modal">
+                                                        <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#teacher-modal">
                                                             <button class="btn btn-xs btn-primary w-20">
                                                                 Modifier
                                                             </button>

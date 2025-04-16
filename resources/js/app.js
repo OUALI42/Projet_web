@@ -5,6 +5,7 @@ import './custom/Add_Cohort';
 import './custom/Cohort_edit';
 import './custom/Cohort_Delete';
 import './custom/Teachers-add';
+import './custom/Teachers-edit';
 
 import Alpine from 'alpinejs';
 

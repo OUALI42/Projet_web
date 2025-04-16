@@ -39,4 +39,28 @@ class TeacherController extends Controller
 
         return response()->json(['message' => 'Enseignant ajouté avec succès.']);
     }
+
+    public function UpdateUser(Request $request)
+    {
+        //      Type Verification
+        $validated = $request->validate([
+            'current_email' => 'required|email|exists:users,email',
+            'last_name'     => 'required|string|max:255',
+            'first_name'    => 'required|string|max:255',
+            'email'         => 'required|email|max:255|unique:users,email,' . $request->current_email . ',email',
+        ]);
+
+        // We retrieve the user by his current email
+        $user = \App\Models\User::where('email', $validated['current_email'])->first();
+
+
+        // Update of informations
+        $user->update([
+            'first_name' => $validated['first_name'],
+            'last_name'  => $validated['last_name'],
+            'email'      => $validated['email'],
+        ]);
+
+        return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
+    }
 }

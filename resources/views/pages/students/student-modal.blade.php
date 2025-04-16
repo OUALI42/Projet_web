@@ -22,7 +22,5 @@
                 {{ __('Valider') }}
             </x-forms.primary-button>
         </form>
-
-
     </div>
 @overwrite
