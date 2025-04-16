@@ -1,41 +1,55 @@
-<div class="card">
+<div class="card pb-2.5">
     <div class="card-header" id="auth_password">
-        <h3 class="card-title">
-            Password
-        </h3>
+        <h3 class="card-title">Password</h3>
     </div>
-    <div class="card-body grid gap-5">
-        <div class="w-full">
-            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                <label class="form-label max-w-56">
-                    Current Password
-                </label>
-                <input class="input" placeholder="Your current password" type="text" value="">
-                </input>
+
+    <div class="card-body grid gap-5 pt-7.5">
+        <form method="POST" action="{{ route('profile.updatePassword') }}">
+            @csrf
+            @method('PATCH')
+
+            <x-forms.input
+                label="{{ __('Current Password') }}"
+                name="current_password"
+                type="password"
+                :placeholder="__('Enter your current password')"
+                required
+                :messages="$errors->get('current_password')"
+            />
+
+            <x-forms.input
+                label="{{ __('New Password') }}"
+                name="password"
+                type="password"
+                :placeholder="__('Enter new password')"
+                required
+                :messages="$errors->get('password')"
+            />
+
+            <x-forms.input
+                label="{{ __('Confirm Password') }}"
+                name="password_confirmation"
+                type="password"
+                :placeholder="__('Confirm new password')"
+                required
+                :messages="$errors->get('password_confirmation')"
+            />
+
+            <div class="flex justify-end pt-2.5">
+                <x-forms.primary-button>Reset Password</x-forms.primary-button>
+
+                @if (session('status') === 'password-updated')
+                    <p
+                        x-data="{ show: true }"
+                        x-show="show"
+                        x-transition
+                        x-init="setTimeout(() => show = false, 2000)"
+                        class="text-sm text-gray-600 ml-4"
+                    >
+                        {{ __('Saved.') }}
+                    </p>
+                @endif
             </div>
-        </div>
-        <div class="w-full">
-            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                <label class="form-label max-w-56">
-                    New Password
-                </label>
-                <input class="input" placeholder="New password" type="text" value="">
-                </input>
-            </div>
-        </div>
-        <div class="w-full">
-            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
-                <label class="form-label max-w-56">
-                    Confirm New Password
-                </label>
-                <input class="input" placeholder="Confirm new password" type="text" value="">
-                </input>
-            </div>
-        </div>
-        <div class="flex justify-end pt-2.5">
-            <button class="btn btn-primary">
-                Reset Password
-            </button>
-        </div>
+        </form>
     </div>
 </div>

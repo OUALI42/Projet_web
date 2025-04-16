@@ -10,10 +10,36 @@
                 <label class="form-label max-w-56">
                     Email
                 </label>
-                <div class="flex flex-col tems-start grow gap-7.5 w-full">
+                <div>
+                    <form method="POST" action="{{ route('profile.updateEmail') }}">
+                        @csrf
+                        @method('PATCH')
                     <x-forms.input
-                        name="email" type="text" :value="old('email', auth()->user()->email)"
-                        required autofocus class="w-full" :messages="$errors->get('email')" />
+                        label="{{ __('Email') }}"
+                        name="email"
+                        type="email"
+                        :value="old('email', $user->email)"
+                        required
+                        :messages="$errors->get('email')"
+                    />
+
+                    @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                        <div>
+                            <p class="text-sm mt-2 text-gray-800">
+                                {{ __('Your email address is unverified.') }}
+
+                                <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    {{ __('Click here to re-send the verification email.') }}
+                                </button>
+                            </p>
+
+                            @if (session('status') === 'verification-link-sent')
+                                <p class="mt-2 font-medium text-sm text-green-600">
+                                    {{ __('A new verification link has been sent to your email address.') }}
+                                </p>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
