@@ -3445,7 +3445,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _custom_Teachers_add__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_custom_Teachers_add__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _custom_Teachers_edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./custom/Teachers-edit */ "./resources/js/custom/Teachers-edit.js");
 /* harmony import */ var _custom_Teachers_edit__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_custom_Teachers_edit__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _custom_Teachers_delete__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./custom/Teachers-delete */ "./resources/js/custom/Teachers-delete.js");
+/* harmony import */ var _custom_Teachers_delete__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_custom_Teachers_delete__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
@@ -3455,8 +3457,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_8__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_8__["default"].start();
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_9__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_9__["default"].start();
 
 /***/ }),
 
@@ -3892,6 +3895,30 @@ document.addEventListener('DOMContentLoaded', function () {
       return _ref.apply(this, arguments);
     };
   }());
+});
+
+/***/ }),
+
+/***/ "./resources/js/custom/Teachers-delete.js":
+/*!************************************************!*\
+  !*** ./resources/js/custom/Teachers-delete.js ***!
+  \************************************************/
+/***/ (() => {
+
+// This script delete teacher in the teacher list and Data-base
+document.addEventListener('DOMContentLoaded', function () {
+  var deleteForm = document.getElementById('deleteTeacherForm');
+  var deleteButtons = document.querySelectorAll('.open-delete-modal');
+  deleteButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var TeacherId = button.dataset.id;
+      var action = button.dataset.action;
+
+      // Updates the delete form
+      deleteForm.action = action;
+      deleteForm.querySelector('input[name="TeacherId"]').value = TeacherId;
+    });
+  });
 });
 
 /***/ }),

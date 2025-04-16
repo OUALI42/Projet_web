@@ -62,8 +62,8 @@
                                                         </a>
                                                         <a href="#" class="open-delete-modal hover:text-primary cursor-pointer"
                                                            data-id="{{ $teacher->id }}"
-{{--                                                           data-action="{{ route('student.delete', $teacher->id) }}"--}}
-                                                           data-modal-toggle="#Alert-modal">
+                                                           data-action="{{ route('teacher.delete', $teacher->id) }}"
+                                                           data-modal-toggle="#AlertTeacher-modal">
                                                             <button class="btn btn-xs btn-danger w-20">
                                                                 Supprimer
                                                             </button>
@@ -119,6 +119,6 @@
     <!-- end: grid -->
 </x-app-layout>
 
-
+@include('pages.teachers.AlertTeacher-modal', ['teacher' => $teacher])
 @include('pages.teachers.teacher-modal')
 

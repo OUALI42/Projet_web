@@ -63,4 +63,17 @@ class TeacherController extends Controller
 
         return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
     }
+
+    public function delete($id)
+    {
+        //Get id of user student
+        $user_student = User::find($id);
+        //Delete this student of table
+        $user_student->delete();
+
+        $student_school = UserSchool::find($id);
+        $student_school->delete();
+
+        return redirect()->back();
+    }
 }
