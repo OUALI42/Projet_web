@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h1 class="flex items-center gap-1 text-sm font-normal">
             <span class="text-gray-700">
-                {{ __('Enseignants') }}
+                {{ __('Enseignant') }}
             </span>
         </h1>
     </x-slot>
@@ -16,7 +16,7 @@
                         <h3 class="card-title">Liste des enseignants</h3>
                         <div class="input input-sm max-w-48">
                             <i class="ki-filled ki-magnifier"></i>
-                            <input placeholder="Rechercher un enseignant" type="text"/>
+                            <input placeholder="Rechercher un étudiant" type="text"/>
                         </div>
                     </div>
                     <div class="card-body">
@@ -37,41 +37,42 @@
                                                 <span class="sort-icon"></span>
                                             </span>
                                         </th>
+                                        <th class="min-w-[135px]">
+                                            <span class="sort">
+                                                <span class="sort-label">Email</span>
+                                                <span class="sort-icon"></span>
+                                            </span>
+                                        </th>
                                         <th class="w-[70px]"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Doe</td>
-                                            <td>John</td>
-                                            <td>
-                                                <div class="flex items-center justify-between">
-                                                    <a href="#">
-                                                        <i class="text-success ki-filled ki-shield-tick"></i>
-                                                    </a>
+                                    @foreach($teachers as $teacher)
+                                        @if ($User_schools && $User_schools->contains ('user_id',$teacher->id))
+                                            <tr>
+                                                <td>{{ $teacher->last_name }}</td>
+                                                <td>{{ $teacher->first_name }}</td>
+                                                <td>{{ $teacher->email }}</td>
+                                                <td>
+                                                    <div class="flex flex-col items-start space-y-2">
+                                                        <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#student-modal">
+                                                            <button class="btn btn-xs btn-primary w-20">
+                                                                Modifier
+                                                            </button>
+                                                        </a>
+                                                        <a href="#" class="open-delete-modal hover:text-primary cursor-pointer"
+                                                           data-id="{{ $teacher->id }}"
+{{--                                                           data-action="{{ route('student.delete', $teacher->id) }}"--}}
+                                                           data-modal-toggle="#Alert-modal">
+                                                            <button class="btn btn-xs btn-danger w-20">
+                                                                Supprimer
+                                                            </button>
+                                                        </a>
 
-                                                    <a class="hover:text-primary cursor-pointer" href="#"
-                                                       data-modal-toggle="#student-modal">
-                                                        <i class="ki-filled ki-cursor"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Joe</td>
-                                            <td>Dohn</td>
-                                            <td>
-                                                <div class="flex items-center justify-between">
-                                                    <a href="#">
-                                                        <i class="text-danger ki-filled ki-shield-cross"></i>
-                                                    </a>
-                                                    <a class="hover:text-primary cursor-pointer" href="#"
-                                                       data-modal-toggle="#student-modal">
-                                                        <i class="ki-filled ki-cursor"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                        @endif
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -99,8 +100,18 @@
                     </h3>
                 </div>
                 <div class="card-body flex flex-col gap-5">
-                    Formulaire à créer
-                    <!-- @todo A compléter -->
+                    <form id="teacher-form"  data-save-route="{{ route('teacher.save') }}" data-sendmail-route="{{ route('sendmail') }}">
+                        @csrf
+
+                        <x-forms.input name="last_name"  :label="__('Nom')" />
+                        <x-forms.input name="first_name"  id="nom" :label="__('Prénom')" />
+                        <x-forms.input type="email" name="email" id="email" :label="__('Email')" />
+
+                        <x-forms.primary-button>
+                            {{ __('Valider') }}
+                        </x-forms.primary-button>
+                    </form>
+                    <div id="form-message" class="text-sm mt-2"></div>
                 </div>
             </div>
         </div>
@@ -108,4 +119,6 @@
     <!-- end: grid -->
 </x-app-layout>
 
+
 @include('pages.teachers.teacher-modal')
+
