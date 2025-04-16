@@ -3433,21 +3433,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _custom_students__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_custom_students__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _custom_Student_Update__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./custom/Student_Update */ "./resources/js/custom/Student_Update.js");
 /* harmony import */ var _custom_Student_Update__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_custom_Student_Update__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _custom_Add_Cohort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./custom/Add_Cohort */ "./resources/js/custom/Add_Cohort.js");
-/* harmony import */ var _custom_Add_Cohort__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_custom_Add_Cohort__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _custom_Cohort_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./custom/Cohort_edit */ "./resources/js/custom/Cohort_edit.js");
-/* harmony import */ var _custom_Cohort_edit__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_custom_Cohort_edit__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _custom_Students_delete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./custom/Students_delete */ "./resources/js/custom/Students_delete.js");
-/* harmony import */ var _custom_Students_delete__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_custom_Students_delete__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _custom_Students_delete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./custom/Students_delete */ "./resources/js/custom/Students_delete.js");
+/* harmony import */ var _custom_Students_delete__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_custom_Students_delete__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _custom_Add_Cohort__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./custom/Add_Cohort */ "./resources/js/custom/Add_Cohort.js");
+/* harmony import */ var _custom_Add_Cohort__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_custom_Add_Cohort__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _custom_Cohort_edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./custom/Cohort_edit */ "./resources/js/custom/Cohort_edit.js");
+/* harmony import */ var _custom_Cohort_edit__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_custom_Cohort_edit__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _custom_Cohort_Delete__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./custom/Cohort_Delete */ "./resources/js/custom/Cohort_Delete.js");
+/* harmony import */ var _custom_Cohort_Delete__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_custom_Cohort_Delete__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
 
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_5__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_5__["default"].start();
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_6__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_6__["default"].start();
 
 /***/ }),
 
@@ -3531,6 +3534,30 @@ document.addEventListener('DOMContentLoaded', function () {
       return _ref.apply(this, arguments);
     };
   }());
+});
+
+/***/ }),
+
+/***/ "./resources/js/custom/Cohort_Delete.js":
+/*!**********************************************!*\
+  !*** ./resources/js/custom/Cohort_Delete.js ***!
+  \**********************************************/
+/***/ (() => {
+
+// This script delete cohort in the cohort list and Data-base
+document.addEventListener('DOMContentLoaded', function () {
+  var deleteForm = document.getElementById('deleteCohortForm');
+  var deleteButtons = document.querySelectorAll('.open-delete-modal');
+  deleteButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var cohortId = button.dataset.id;
+      var action = button.dataset.action;
+
+      // Updates the delete form
+      deleteForm.action = action;
+      deleteForm.querySelector('input[name="cohortId"]').value = cohortId;
+    });
+  });
 });
 
 /***/ }),
@@ -3729,6 +3756,7 @@ document.addEventListener('DOMContentLoaded', function () {
   \************************************************/
 /***/ (() => {
 
+// This script delete student in the student list and data base
 document.addEventListener('DOMContentLoaded', function () {
   var deleteForm = document.getElementById('deleteUserForm');
   var deleteButtons = document.querySelectorAll('.open-delete-modal');
@@ -3737,7 +3765,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var studentId = button.dataset.id;
       var action = button.dataset.action;
 
-      // Met à jour le formulaire de suppression
+      // Updates the delete form
       deleteForm.action = action;
       deleteForm.querySelector('input[name="studentId"]').value = studentId;
     });

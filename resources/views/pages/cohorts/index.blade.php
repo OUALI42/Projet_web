@@ -79,8 +79,11 @@
                                                             Modifier
                                                         </button>
                                                     </a>
-                                                    <a class="hover:text-primary cursor-pointer" href="#" data-modal-toggle="#Alert-modal">
-                                                        <button class="btn btn-xs btn-danger">
+                                                    <a href="#" class="open-delete-modal hover:text-primary cursor-pointer"
+                                                       data-id="{{ $cohort->id }}"
+                                                       data-action="{{ route('Cohort.delete', $cohort->id) }}"
+                                                       data-modal-toggle="#AlertCohort-modal">
+                                                        <button class="btn btn-xs btn-danger w-20">
                                                             Supprimer
                                                         </button>
                                                     </a>
@@ -138,4 +141,6 @@
     </div>
     <!-- end: grid -->
 </x-app-layout>
+@include('pages.cohorts.AlertCohort-modal' , ['cohort' => $cohort])
 @include('pages.cohorts.editCohorts-modal')
+

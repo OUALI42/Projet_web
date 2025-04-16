@@ -80,5 +80,15 @@ class CohortController extends Controller
         return response()->json(['message' => 'Promotion mise à jour avec succès.', 'cohort' => $cohort]);
     }
 
+    public function delete_cohort($id)
+    {
+        //Get id of Cohort
+        $cohort_delete = Cohort::find($id);
+        //Delete this cohort of table
+        $cohort_delete->delete();
+
+        return redirect()->back();
+    }
+
 
 }
