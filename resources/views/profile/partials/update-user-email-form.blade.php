@@ -11,7 +11,7 @@
                     Email
                 </label>
                 <div>
-                    <form method="POST" action="{{ route('profile.updateEmail') }}">
+                    <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
                         @method('PATCH')
                     <x-forms.input

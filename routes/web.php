@@ -20,9 +20,11 @@ Route::middleware('auth')->group(function () {
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.updatePassword');
-    Route::patch('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile/update', [ProfileController::class, 'updateEmailAndPassword'])->name('profile.update');
+    Route::patch('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
+//    Route::patch('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.updatePassword');
+//    Route::patch('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
+    Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('verified')->group(function () {
         // Dashboard

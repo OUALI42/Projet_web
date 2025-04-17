@@ -4,52 +4,49 @@
     </div>
 
     <div class="card-body grid gap-5 pt-7.5">
-        <form method="POST" action="{{ route('profile.updatePassword') }}">
-            @csrf
-            @method('PATCH')
+        <div class="w-full">
+            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
+                <label class="form-label max-w-56">
+                    {{ __('Change Password') }}
+                </label>
+                <div>
+                    <form method="POST" action="{{ route('profile.update') }}">
+                        @csrf
+                        @method('PATCH')
 
-            <x-forms.input
-                label="{{ __('Current Password') }}"
-                name="current_password"
-                type="password"
-                :placeholder="__('Enter your current password')"
-                required
-                :messages="$errors->get('current_password')"
-            />
+                        <x-forms.input
+                            label="{{ __('Current Password') }}"
+                            name="current_password"
+                            type="password"
+                            required
+                            :placeholder="__('Enter your current password')"
+                            :messages="$errors->get('current_password')"
+                        />
 
-            <x-forms.input
-                label="{{ __('New Password') }}"
-                name="password"
-                type="password"
-                :placeholder="__('Enter new password')"
-                required
-                :messages="$errors->get('password')"
-            />
+                        <x-forms.input
+                            label="{{ __('New Password') }}"
+                            name="password"
+                            type="password"
+                            required
+                            :placeholder="__('Enter new password')"
+                            :messages="$errors->get('password')"
+                        />
 
-            <x-forms.input
-                label="{{ __('Confirm Password') }}"
-                name="password_confirmation"
-                type="password"
-                :placeholder="__('Confirm new password')"
-                required
-                :messages="$errors->get('password_confirmation')"
-            />
+                        <x-forms.input
+                            label="{{ __('Confirm New Password') }}"
+                            name="password_confirmation"
+                            type="password"
+                            required
+                            :placeholder="__('Confirm new password')"
+                            :messages="$errors->get('password_confirmation')"
+                        />
 
-            <div class="flex justify-end pt-2.5">
-                <x-forms.primary-button>Reset Password</x-forms.primary-button>
-
-                @if (session('status') === 'password-updated')
-                    <p
-                        x-data="{ show: true }"
-                        x-show="show"
-                        x-transition
-                        x-init="setTimeout(() => show = false, 2000)"
-                        class="text-sm text-gray-600 ml-4"
-                    >
-                        {{ __('Saved.') }}
-                    </p>
-                @endif
+                        <div class="flex justify-end pt-2.5">
+                            <x-forms.primary-button>{{ __('Reset Password') }}</x-forms.primary-button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
