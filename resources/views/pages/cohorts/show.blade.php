@@ -41,14 +41,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        <td>Doe</td>
-                                        <td>John</td>
-                                        <td>10/02/2000</td>
-                                        <td class="cursor-pointer pointer">
-                                            <i class="ki-filled ki-trash"></i>
-                                        </td>
-                                    </tr>
+                                    @foreach($students_Cohorts as $students_Cohort)
+                                        @if ($User_schools && $User_schools->contains('user_id', $students_Cohorts->id))
+                                            <tr>
+                                                <td>{{ $students_Cohort->last_name }}</td>
+                                                <td>{{ $students_Cohort->first_name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($students_Cohort->birth_date)->format('d/m/Y') }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -76,17 +77,21 @@
                     </h3>
                 </div>
                 <div class="card-body flex flex-col gap-5">
-                    <x-forms.dropdown name="user_id" :label="__('Étudiant')">
-                        @foreach($students as $student)
-                            @if ($User_schools && $User_schools->contains ('user_id',$student->id))
-                            <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }}</option>
-                            @endif
-                        @endforeach
-                    </x-forms.dropdown>
-
-                    <x-forms.primary-button>
-                        {{ __('Valider') }}
-                    </x-forms.primary-button>
+                    <form action="{{ route('cohorts.attach-student', $cohort->id) }}" method="POST">
+                        @csrf
+                        <x-forms.dropdown name="student_id" :label="__('Étudiant')">
+                            <option value="">{{ __('Sélectionner un étudiant') }}</option>
+                            @foreach($students as $student)
+                                @if ($User_schools && $User_schools->contains('user_id', $student->id))
+                                    <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }}</option>
+                                @endif
+                            @endforeach
+                        </x-forms.dropdown>
+                        <br>
+                        <x-forms.primary-button>
+                            {{ __('Valider') }}
+                        </x-forms.primary-button>
+                    </form>
                 </div>
             </div>
         </div>

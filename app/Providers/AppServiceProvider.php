@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+        //to dynamically display promotions in the sidebar
         View::share('cohorts', Cohort::all());
     }
 }

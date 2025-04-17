@@ -29,6 +29,7 @@ class ProfileController extends Controller
      */
     public function updateAvatar(Request $request): RedirectResponse
     {
+        //Type Verification
         $request->validate([
             'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'], // max 2MB
         ]);
@@ -106,6 +107,7 @@ class ProfileController extends Controller
 
         $user->delete();
 
+        //Delete the Profil of UserSchool table
         UserSchool::where('user_id', $user->id)->delete();
 
         $request->session()->invalidate();

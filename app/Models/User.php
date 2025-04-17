@@ -89,6 +89,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Cohort::class, 'Teachers_Cohorts', 'teacher_id', 'cohort_id');
     }
 
+    public function cohorts_students()
+    {
+        return $this->belongsToMany(Cohort::class, 'cohort_student', 'student_id', 'cohort_id');
+    }
+
 
 
 }

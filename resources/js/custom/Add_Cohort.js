@@ -1,8 +1,14 @@
 
 // This Script take the information of form for add in to the list of cohort
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Retrieves the form by its ID
     const form = document.getElementById('cohort-form');
+
+    // Retrieves the route defined in a form data attribute (ex: data-cohort-route="/url")
     const saveCohortRoute = form.dataset.cohortRoute;
+
+    // Retrieves the div where the success or error message will be displayed
     const messageDiv = document.getElementById('form-message');
 
     form.addEventListener('submit', async function (e) {
@@ -14,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(form);
 
         try {
+            // Sends data via POST to the defined URL
             const saveResponse = await fetch(saveCohortRoute, {
                 method: "POST",
                 headers: {
@@ -45,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const endDate = new Date(formData.get('end_date'));
             const yearRange = `${startDate.getFullYear()}-${endDate.getFullYear()}`;
 
+            // Fills the new <tr> with form data
             newRow.innerHTML = `
                 <td>
                     <div class="flex flex-col gap-2">
@@ -70,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
             `;
 
+            // Adds the new row to the table
             tbody.appendChild(newRow);
 
         } catch (error) {

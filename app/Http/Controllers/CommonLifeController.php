@@ -11,10 +11,15 @@ class CommonLifeController extends Controller
     {
         $studentID = auth()->id();
 
+        //Get the task of the student
         $tasks = CommonLife::where('StudentID', $studentID)->get()->keyBy('Task');
 
         return view('pages.commonLife.index', compact('tasks'));
     }
+
+    /**
+     * This Function can save the task of comon life of student
+     */
     public function saveTask(Request $request)
     {
         //Type Verification

@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+// this script get the information of the line in the board
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.open-edit-modal');
     const form = document.getElementById('updateCohortsForm');

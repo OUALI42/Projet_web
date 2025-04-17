@@ -19,6 +19,10 @@ class TeacherController extends Controller
         return view('pages.teachers.index', compact('teachers', 'User_schools'));
     }
 
+
+    /**
+     * this function saves the information on the Teachers and add this in to the table
+     */
     public function Save_Teacher(Request $request)
     {
         // Type Verification
@@ -28,6 +32,7 @@ class TeacherController extends Controller
             'email' => 'required|email|unique:users,email',
         ]);
 
+        // Set a default password
         $validated['password'] = Hash::make('123456');
 
         // Creation of the teacher
@@ -42,6 +47,10 @@ class TeacherController extends Controller
         return response()->json(['message' => 'Enseignant ajouté avec succès.']);
     }
 
+
+    /**
+     * this function update the information on the Teacher and add this in to the table
+     */
     public function UpdateUser(Request $request)
     {
         //      Type Verification
@@ -57,6 +66,7 @@ class TeacherController extends Controller
         $user = \App\Models\User::where('email', $validated['current_email'])->first();
 
 
+        // Associate a teacher with a Cohort
         if ($request->filled('cohort_id')) {
             Teachers_Cohorts::create([
                 'cohort_id' => $validated['cohort_id'],
@@ -74,15 +84,22 @@ class TeacherController extends Controller
         return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
     }
 
+
+    /**
+     * this function delete the information on the Teachers and delete this in to the table
+     */
     public function delete($id)
     {
-        //Get id of user student
-        $user_student = User::find($id);
-        //Delete this student of table
-        $user_student->delete();
+        //Get id of user Teachers
+        $Teacher_user = User::find($id);
+        //Delete this Teachers of table
+        $Teacher_user->delete();
 
-        $student_school = UserSchool::find($id);
-        $student_school->delete();
+        $Teacher_school = UserSchool::find($id);
+        $Teacher_school->delete();
+
+        $Teacher_cohort = Teachers_Cohorts::find($id);
+        $Teacher_cohort->delete();
 
         return redirect()->back();
     }

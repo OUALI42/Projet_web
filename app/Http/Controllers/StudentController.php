@@ -32,6 +32,7 @@ class StudentController extends Controller
             'birth_date' => 'required|date',
         ]);
 
+        // Set a default password
         $validated['password'] = Hash::make('123456');
 
         // Creation of the student
@@ -46,6 +47,10 @@ class StudentController extends Controller
         return response()->json(['message' => 'Étudiant ajouté avec succès.']);
     }
 
+
+    /**
+     * this function update the information on the Student and add this in to the table
+     */
     public function UpdateUser(Request $request)
     {
         //      Type Verification
@@ -72,6 +77,10 @@ class StudentController extends Controller
         return response()->json(['message' => 'Utilisateur mis à jour avec succès.']);
     }
 
+
+    /**
+     * this function delete the information on the Student and delete this in to the table
+     */
     public function delete($id)
     {
         //Get id of user student

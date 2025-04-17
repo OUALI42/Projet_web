@@ -3447,9 +3447,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _custom_Teachers_edit__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_custom_Teachers_edit__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _custom_Teachers_delete__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./custom/Teachers-delete */ "./resources/js/custom/Teachers-delete.js");
 /* harmony import */ var _custom_Teachers_delete__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_custom_Teachers_delete__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _custom_student_assign_cohort__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./custom/student_assign_cohort */ "./resources/js/custom/student_assign_cohort.js");
-/* harmony import */ var _custom_student_assign_cohort__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_custom_student_assign_cohort__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
@@ -3460,9 +3458,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_10__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_10__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_9__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_9__["default"].start();
 
 /***/ }),
 
@@ -3478,8 +3475,13 @@ function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 // This Script take the information of form for add in to the list of cohort
 document.addEventListener('DOMContentLoaded', function () {
+  // Retrieves the form by its ID
   var form = document.getElementById('cohort-form');
+
+  // Retrieves the route defined in a form data attribute (ex: data-cohort-route="/url")
   var saveCohortRoute = form.dataset.cohortRoute;
+
+  // Retrieves the div where the success or error message will be displayed
   var messageDiv = document.getElementById('form-message');
   form.addEventListener('submit', /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
@@ -3526,8 +3528,10 @@ document.addEventListener('DOMContentLoaded', function () {
             newRow = document.createElement('tr');
             startDate = new Date(formData.get('start_date'));
             endDate = new Date(formData.get('end_date'));
-            yearRange = "".concat(startDate.getFullYear(), "-").concat(endDate.getFullYear());
+            yearRange = "".concat(startDate.getFullYear(), "-").concat(endDate.getFullYear()); // Fills the new <tr> with form data
             newRow.innerHTML = "\n                <td>\n                    <div class=\"flex flex-col gap-2\">\n                        <a class=\"leading-none font-medium text-sm text-gray-900 hover:text-primary\" href=\"#\">\n                            ".concat(formData.get('name'), "\n                        </a>\n                        <span class=\"text-2sm text-gray-700 font-normal leading-3\">\n                            ").concat(formData.get('description'), "\n                        </span>\n                    </div>\n                </td>\n                <td>").concat(yearRange, "</td>\n                <td>").concat(formData.get('number_of_students'), "</td>\n                <td>\n                    <div class=\"flex items-center justify-between\">\n                        <a class=\"hover:text-primary cursor-pointer\" href=\"#\" data-modal-toggle=\"#editCohorts-modal\">\n                            <button class=\"btn btn-xs btn-primary\">Modifier</button>\n                        </a>\n                        <a class=\"hover:text-primary cursor-pointer\" href=\"#\" data-modal-toggle=\"#Alert-modal\">\n                            <button class=\"btn btn-xs btn-danger\">Supprimer</button>\n                        </a>\n                    </div>\n                </td>\n            ");
+
+            // Adds the new row to the table
             tbody.appendChild(newRow);
             _context.next = 31;
             break;
@@ -3654,6 +3658,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }());
 });
+
+// this script get the information of the line in the board
 document.addEventListener('DOMContentLoaded', function () {
   var buttons = document.querySelectorAll('.open-edit-modal');
   var form = document.getElementById('updateCohortsForm');
@@ -3879,7 +3885,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Reset the table with new student
             tbody = document.querySelector('table[data-datatable-table="true"] tbody');
-            newRow = document.createElement('tr');
+            newRow = document.createElement('tr'); // Fills the new <tr> with form data
             newRow.innerHTML = "\n                <td>".concat(lastName, "</td>\n                <td>").concat(firstName, "</td>\n                <td>").concat(email, "</td>\n                <td>\n                    <div class=\"flex flex-col items-start space-y-2\">\n                        <a class=\"hover:text-primary cursor-pointer\" href=\"#\" data-modal-toggle=\"#student-modal\">\n                            <button class=\"btn btn-xs btn-primary w-20\">\n                                Modifier\n                            </button>\n                        </a>\n                        <a class=\"hover:text-primary cursor-pointer\" href=\"#\" data-modal-toggle=\"#Alert-modal\">\n                            <button class=\"btn btn-xs btn-danger w-20\">\n                                Supprimer\n                            </button>\n                        </a>\n                    </div>\n                </td>\n            ");
             tbody.appendChild(newRow);
             _context.next = 41;
@@ -4125,50 +4131,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return _ref.apply(this, arguments);
     };
   }());
-});
-
-/***/ }),
-
-/***/ "./resources/js/custom/student_assign_cohort.js":
-/*!******************************************************!*\
-  !*** ./resources/js/custom/student_assign_cohort.js ***!
-  \******************************************************/
-/***/ (() => {
-
-document.addEventListener('DOMContentLoaded', function () {
-  var assignBtn = document.getElementById('assign-student-btn');
-  if (!assignBtn) return;
-  assignBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    var studentSelect = document.querySelector('select[name="user_id"]');
-    var studentId = studentSelect ? studentSelect.value : null;
-    var cohortId = assignBtn.dataset.cohort;
-    if (!studentId) {
-      alert("Veuillez sélectionner un étudiant.");
-      return;
-    }
-    fetch("/cohorts/".concat(cohortId, "/assign-student"), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      },
-      body: JSON.stringify({
-        student_id: studentId
-      })
-    }).then(function (response) {
-      return response.json();
-    }).then(function (data) {
-      if (data.success) {
-        alert('Étudiant ajouté avec succès !');
-        location.reload();
-      } else {
-        alert('Erreur : ' + data.message);
-      }
-    })["catch"](function (error) {
-      console.error('Erreur AJAX:', error);
-    });
-  });
 });
 
 /***/ }),

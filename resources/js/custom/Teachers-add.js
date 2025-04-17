@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tbody = document.querySelector('table[data-datatable-table="true"] tbody');
             const newRow = document.createElement('tr');
 
+            // Fills the new <tr> with form data
             newRow.innerHTML = `
                 <td>${lastName}</td>
                 <td>${firstName}</td>
