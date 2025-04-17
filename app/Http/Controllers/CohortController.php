@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cohort;
+use App\Models\User;
+use App\Models\UserSchool;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -21,14 +23,10 @@ class CohortController extends Controller
     {
         $cohorts = Cohort::all();
 
-        // Retrieve current year
-        $currentYear = Carbon::now()->year;
-
         $user = auth()->user();
 
-        // Filter current year promotions and yourself promotion
-        $cohorts_teachers = $user->cohorts()
-            ->get();
+        // Filter yourself promotion
+        $cohorts_teachers = $user->cohorts()->get();
 
         return view('pages.cohorts.index', compact('cohorts','cohorts_teachers'));
     }
@@ -43,9 +41,9 @@ class CohortController extends Controller
      */
     public function show(Cohort $cohort) {
 
-        return view('pages.cohorts.show', [
-            'cohort' => $cohort
-        ]);
+        $students = User::all();
+        $User_schools = UserSchool::where('role', 'student')->get();
+        return view('pages.cohorts.show', compact('cohort', 'students','User_schools'));
     }
 
     public function Add_Cohort(Request $request)

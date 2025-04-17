@@ -22,8 +22,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/update', [ProfileController::class, 'updateEmailAndPassword'])->name('profile.update');
     Route::patch('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
-//    Route::patch('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.updatePassword');
-//    Route::patch('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
     Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('verified')->group(function () {
@@ -49,6 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/student/save', [StudentController::class, 'Save_students'])->name('student.save');
         Route::post('/students/update', [StudentController::class, 'UpdateUser'])->name('student.update');
         Route::delete('students/delete/{id}', [StudentController::class, 'delete'])->name('student.delete');
+
 
 
 

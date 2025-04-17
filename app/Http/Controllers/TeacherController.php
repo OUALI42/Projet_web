@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cohort;
+use App\Models\Teachers_Cohorts;
 use App\Models\User;
 use App\Models\UserSchool;
 use Illuminate\Http\Request;
@@ -49,11 +50,19 @@ class TeacherController extends Controller
             'last_name'     => 'required|string|max:255',
             'first_name'    => 'required|string|max:255',
             'email'         => 'required|email|max:255|unique:users,email,' . $request->current_email . ',email',
+            'cohort_id' => 'nullable|exists:cohorts,id',
         ]);
 
         // We retrieve the user by his current email
         $user = \App\Models\User::where('email', $validated['current_email'])->first();
 
+
+        if ($request->filled('cohort_id')) {
+            Teachers_Cohorts::create([
+                'cohort_id' => $validated['cohort_id'],
+                'teacher_id' => $user->id,
+            ]);
+        }
 
         // Update of informations
         $user->update([

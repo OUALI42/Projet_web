@@ -75,7 +75,6 @@
                                                             Supprimer
                                                         </button>
                                                     </a>
-
                                                 </div>
                                             </td>
                                         @endif
