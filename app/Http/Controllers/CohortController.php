@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cohort;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -19,7 +20,17 @@ class CohortController extends Controller
     public function index()
     {
         $cohorts = Cohort::all();
-        return view('pages.cohorts.index', compact('cohorts'));
+
+        // Retrieve current year
+        $currentYear = Carbon::now()->year;
+
+        $user = auth()->user();
+
+        // Filter current year promotions and yourself promotion
+        $cohorts_teachers = $user->cohorts()
+            ->get();
+
+        return view('pages.cohorts.index', compact('cohorts','cohorts_teachers'));
     }
 
 

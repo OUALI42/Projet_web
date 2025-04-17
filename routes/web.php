@@ -72,7 +72,6 @@ Route::middleware('auth')->group(function () {
         //Email
         Route::post('/send-mail', [\App\Http\Controllers\EmailController::class, 'sendWelcomeEmail'])->name('sendmail');
 
-
     });
 
 

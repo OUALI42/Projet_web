@@ -39,77 +39,46 @@
                                                 <span class="sort-icon"></span>
                                             </span>
                                         </th>
-                                        <th class="min-w-[135px]">
-                                            <span class="sort">
-                                                <span class="sort-label">Retrospective</span>
-                                                <span class="sort-icon"></span>
-                                            </span>
-                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="flex flex-col gap-2">
-                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
-                                                   href="{{ route('cohort.show', 1) }}">
-                                                    Promotion B1
-                                                </a>
-                                                <span class="text-2sm text-gray-700 font-normal leading-3">
-                                                    Cergy
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>2024-2025</td>
-                                        <td>34</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flex flex-col gap-2">
-                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
-                                                   href="{{ route('cohort.show', 1) }}">
-                                                    Promotion B2
-                                                </a>
-                                                <span class="text-2sm text-gray-700 font-normal leading-3">
-                                                    Cergy
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>2024-2025</td>
-                                        <td>31</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flex flex-col gap-2">
-                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
-                                                   href="{{ route('cohort.show', 1) }}">
-                                                    Promotion B3
-                                                </a>
-                                                <span class="text-2sm text-gray-700 font-normal leading-3">
-                                                    Cergy
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>2024-2025</td>
-                                        <td>30</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flex flex-col gap-2">
-                                                <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
-                                                   href="{{ route('cohort.show', 1) }}">
-                                                    Promotion B4
-                                                </a>
-                                                <span class="text-2sm text-gray-700 font-normal leading-3">
-                                                    Cergy
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>2024-2025</td>
-                                        <td>28</td>
-                                    </tr>
+                                    @forelse($cohorts as $cohort)
+                                        <tr>
+                                            <td>
+                                                <div class="flex flex-col gap-2">
+                                                    <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                       href="{{ route('cohort.show', $cohort->id) }}">
+                                                        {{ $cohort->name }}
+                                                    </a>
+                                                    <span class="text-2sm text-gray-700 font-normal leading-3">{{ $cohort->description }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($cohort->start_date)->format('Y') }} -
+                                                {{ \Carbon\Carbon::parse($cohort->end_date)->format('Y') }}
+                                            </td>
+                                            <td>{{ $cohort->number_of_students ?? 0 }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-gray-500 py-4">
+                                                Aucun groupe trouvé.
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-gray-600 text-2sm font-medium">
+                                <div class="flex items-center gap-2 order-2 md:order-1">
+                                    Show
+                                    <select class="select select-sm w-16" data-datatable-size="true" name="perpage"></select>
+                                    per page
+                                </div>
+                                <div class="flex items-center gap-4 order-1 md:order-2">
+                                    <span data-datatable-info="true"></span>
+                                    <div class="pagination" data-datatable-pagination="true"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,3 +88,5 @@
     </div>
     <!-- end: grid -->
 </x-app-layout>
+
+

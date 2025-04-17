@@ -39,14 +39,21 @@
                                                 <span class="sort-icon"></span>
                                             </span>
                                         </th>
+
+                                        {{--For admin Cohort--}}
+                                        @can('viewAny', \App\Models\Cohort::class)
                                         <th class="min-w-[135px]">
                                             <span class="sort">
                                                 <span class="sort-label">Action</span>
                                                 <span class="sort-icon"></span>
                                             </span>
                                         </th>
+                                        @endcan
                                     </tr>
                                     </thead>
+
+                                    {{--For admin Cohort--}}
+                                    @can('viewAny', \App\Models\Cohort::class)
                                     <tbody>
                                     @forelse($cohorts as $cohort)
                                         <tr>
@@ -96,7 +103,36 @@
                                         </tr>
                                     @endforelse
                                     </tbody>
+                                    @endcan
 
+
+                                    {{--For Teachers Cohort--}}
+                                    <tbody>
+                                    @can('viewTeacher', \App\Models\Cohort::class)
+                                    @forelse($cohorts_teachers as $cohort_teach)
+                                        <tr>
+                                            <td>
+                                                <div class="flex flex-col gap-2">
+                                                    <a class="leading-none font-medium text-sm text-gray-900 hover:text-primary"
+                                                       href="{{ route('cohort.show', $cohort_teach->id) }}">
+                                                        {{ $cohort_teach->name }}
+                                                    </a>
+                                                    <span class="text-2sm text-gray-700 font-normal leading-3">{{ $cohort_teach->description }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($cohort_teach->start_date)->format('Y') }} -
+                                                {{ \Carbon\Carbon::parse($cohort_teach->end_date)->format('Y') }}
+                                            </td>
+                                            <td>{{ $cohort_teach->number_of_students ?? 0 }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-gray-500 py-4">Aucune promotion trouvée.</td>
+                                        </tr>
+                                    @endforelse
+                                    @endcan
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-gray-600 text-2sm font-medium">
@@ -115,6 +151,9 @@
                 </div>
             </div>
         </div>
+
+        {{--For admin Cohort--}}
+        @can('viewAny', \App\Models\Cohort::class)
         <div class="lg:col-span-1">
             <div class="card h-full">
                 <div class="card-header">
@@ -138,9 +177,12 @@
                 </form>
             </div>
         </div>
+        @endcan
     </div>
     <!-- end: grid -->
 </x-app-layout>
+@can('viewAny', \App\Models\Cohort::class)
 @include('pages.cohorts.AlertCohort-modal' , ['cohort' => $cohort])
 @include('pages.cohorts.editCohorts-modal')
+@endcan
 

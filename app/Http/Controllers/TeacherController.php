@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
 use App\Models\User;
 use App\Models\UserSchool;
 use Illuminate\Http\Request;
