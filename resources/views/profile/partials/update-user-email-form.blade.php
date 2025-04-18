@@ -6,9 +6,7 @@
     </div>
     <div class="card-body grid gap-5 pt-7.5">
         <div class="w-full">
-            <div class="flex items-baseline flex-wrap lg:flex-nowrap gap-2.5">
                 <label class="form-label max-w-56">
-                    Email
                 </label>
                 <div>
                     <form method="POST" action="{{ route('profile.update') }}">
@@ -47,4 +45,3 @@
             <x-forms.primary-button>Save Changes</x-forms.primary-button>
         </div>
     </div>
-</div>

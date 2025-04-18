@@ -98,3 +98,43 @@ npm run dev
 - 🧠 Génération automatique de QCM par langage sélectionné
 - ✅ Système de Kanban pour les rétrospectives
 - 📈 Statistiques d’usage et suivi pédagogique
+
+
+
+
+
+# 📚 Suivi de Projet
+
+## ✅ Fonctionnalités Implémentées
+
+| Story        | Statut         | Description                                                                 |
+|--------------|----------------|-----------------------------------------------------------------------------|
+| Story 1      | ✅ Complète     | Fonctionnalité entièrement terminée.                                        |
+| Story 2      | ✅ Complète     | Association d’un enseignant à une promotion via l’update des enseignants.   |
+| Story 3      | ✅ Complète     | Association d’un étudiant à une promotion en cliquant sur la promotion.     |
+| Story 4      | ✅ Complète     | Fonctionnalité entièrement terminée.                                        |
+| Story 5      | ✅ Complète     | Fonctionnalité entièrement terminée.                                        |
+| Story 6      | ⚠️ Partielle    | Modification du mail, mot de passe, et suppression de compte possibles.     |
+
+---
+
+## ⚠️ Fonctionnalités Manquantes ou Bugs Connus
+
+| Élément                | Type    | Description                                                                 |
+|------------------------|---------|-----------------------------------------------------------------------------|
+| Story 6                | Manque  | Modification de la photo de profil non implémentée.                         |
+| Story 3                | Bug     | Les dates d’anniversaire des étudiants affichent la date actuelle.         |
+
+---
+
+## 🎁 Bonus Implémenté
+
+- ✔️ Reprise de l’ancienne **Story 2** :
+    - L’élève peut **pointer** et **laisser un commentaire** pour sa tâche de vie commune.
+    - Il peut également **modifier le statut** de ses bilans de connaissance (**À faire**, **En cours**, **Terminé**).
+
+---
+
+
+
+
