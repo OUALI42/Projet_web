@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use App\Models\Students;
+use App\Models\Teachers_Cohorts;
 use App\Models\User;
 use App\Models\UserSchool;
 use Illuminate\Http\Request;
@@ -90,6 +91,12 @@ class StudentController extends Controller
 
         $student_school = UserSchool::find($id);
         $student_school->delete();
+
+        // Delete into Teachers_Cohorts table
+        $Student_cohort = Teachers_Cohorts::find($id);
+        if ($Student_cohort) {
+            $Student_cohort->delete();
+        }
 
         return redirect()->back();
     }

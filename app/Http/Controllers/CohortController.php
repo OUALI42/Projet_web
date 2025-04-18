@@ -41,10 +41,24 @@ class CohortController extends Controller
      */
     public function show(Cohort $cohort) {
 
-        $students_Cohorts = $cohort->students;
+        // Retrieves all IDs of UserSchool records where the role is "student"
+        $students_role = UserSchool::where('role', 'student')->pluck('id');
+
+        $students = User::whereIn('id', $students_role)->get();
+
+        // Get the id of student
+        $cohortUsersId = Teachers_Cohorts::where('cohort_id', $cohort->id)->pluck('student_id');
+
+        // Filter UserSchool records to keep only those with student IDs obtained
+        $studentsId = UserSchool::whereIn('user_id', $cohortUsersId)
+            ->where('role', 'student')
+            ->pluck('user_id');
+
+        $cohortStudents = User::whereIn('id', $studentsId)->get();
+
         $students = User::all();
         $User_schools = UserSchool::where('role', 'student')->get();
-        return view('pages.cohorts.show', compact('cohort', 'students','User_schools','students_Cohorts'));
+        return view('pages.cohorts.show', compact('cohort', 'students','User_schools','cohortStudents'));
     }
 
 
@@ -107,25 +121,24 @@ class CohortController extends Controller
     /**
      * This function assigns a student to a promotion
      */
-    public function attachStudentToCohort(Request $request, Cohort $cohort)
+
+    public function attachStudentToCohort(Request $request, $cohortId)
     {
-        $validated = $request->validate([
-            'student_id' => 'required|exists:users,id',
-            'cohort_id' => 'nullable|exists:cohorts,id',
-        ]);
+        $student_id = $request->input('student_id');
 
-        // Lier l'étudiant à la promotion via la table pivot cohort_student
-        $cohort->students()->syncWithoutDetaching([$validated['student_id']]);
+        //  if the student already exists in the Teachers_cohort table
+        $exists = Teachers_Cohorts::where('student_id', $student_id)->exists();
 
-        // Si une cohorte est spécifiée, vous pouvez gérer l'ajout dans la table Teachers_Cohorts
-        if ($request->filled('cohort_id')) {
+        // Create student in the Teachers-Cohorts
+        if (!$exists) {
             Teachers_Cohorts::create([
-                'cohort_id' => $validated['cohort_id'],
-                'teacher_id' => $validated['student_id'], // Ceci est spécifique à votre logique.
+                'cohort_id' => $cohortId,
+                'student_id' => $student_id,
+                'teacher_id' => null,
             ]);
         }
 
-        return redirect()->back()->with('success', 'Étudiant ajouté à la promotion.');
+        return redirect()->back();
     }
 
 
@@ -140,6 +153,12 @@ class CohortController extends Controller
         $cohort_delete = Cohort::find($id);
         //Delete this cohort of table
         $cohort_delete->delete();
+
+        // Delete into Teachers_Cohorts table
+        $cohort_teachers = Teachers_Cohorts::find($id);
+        if ($cohort_teachers) {
+            $cohort_teachers->delete();
+        }
 
         return redirect()->back();
     }

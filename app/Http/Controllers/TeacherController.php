@@ -98,8 +98,11 @@ class TeacherController extends Controller
         $Teacher_school = UserSchool::find($id);
         $Teacher_school->delete();
 
+        // Delete into Teachers_Cohorts table
         $Teacher_cohort = Teachers_Cohorts::find($id);
-        $Teacher_cohort->delete();
+        if ($Teacher_cohort) {
+            $Teacher_cohort->delete();
+        }
 
         return redirect()->back();
     }
